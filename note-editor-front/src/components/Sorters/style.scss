@@ -1,0 +1,23 @@
+.sorters {
+    width: calc(34000% / 1018);
+    display: flex;
+    justify-content: space-between;
+}
+
+.sorters__sorter-by-title-icon,
+.sorters__sorter-by-date-icon {
+    width: clamp(55px, 11.018vw, 66px);
+    height: 100%;
+
+    &:hover{
+        transform: scale(1.03);
+    }
+}
+
+@media (max-width: 599px) {
+    .sorters {
+        width: 58.43vw;
+        display: flex;
+        justify-content: space-evenly;
+    }
+}

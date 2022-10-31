@@ -1,0 +1,31 @@
+$corr: 215.88 / 22.81;
+$this-width: min(35.978vw, 359.78px);
+
+.search {
+    position: relative;
+    width: $this-width;
+    height: calc($this-width / $corr);
+    display: flex;
+    align-items: center;
+}
+
+.search__input {
+    padding-left: 10px;
+    background: none;
+}
+
+.search__loupe-icon {
+    height: 100%;
+    width: 10%;
+
+    .inside-loupe {
+        fill: lightcyan;
+    }
+}
+
+@media (max-width: 599px) {
+    .search {
+        width: 58.43vw;
+        height: 58.43vw / $corr;
+    }
+}

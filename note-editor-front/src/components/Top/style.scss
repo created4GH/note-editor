@@ -1,0 +1,17 @@
+.top {
+    $my-height: 4600% / 655;
+    height: $my-height;
+    margin-bottom: calc(3700% / 1018);
+    display: flex;
+    position: relative;
+    gap: calc(3600% / 1018);
+    background-color: lightcyan;
+
+    @media (max-width: 599px) {
+        height: 14.5%;
+        flex-direction: column;
+        align-items: center;
+        justify-content: space-around;
+        margin-bottom: 10px;
+    }
+}

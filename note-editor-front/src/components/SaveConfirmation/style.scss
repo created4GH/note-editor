@@ -1,0 +1,54 @@
+.save-confirmation {
+    $this-size: min(150px, 15vw);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    width: $this-size;
+    height: $this-size;
+    transform: translate(-50%, -50%);
+    padding: 5px;
+    box-sizing: content-box;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+    align-items: center;
+    background-color: rgba($color: black, $alpha: 0.7);
+    border-radius: 10px;
+    z-index: 4;
+    color: white;
+    opacity: 0;
+    animation: appearance 3s;
+}
+
+@keyframes appearance{
+    0%{
+        opacity: 0;
+    }
+    50%{
+        opacity: 1
+    }
+    100%{
+        opacity: 0;
+    }
+}
+
+.checkmark-wrapper {
+    width: 40%;
+    height: 40%;
+    background-color: #fff;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    .checkmark-icon {
+        height: 60%;
+        width: 60%;
+    }
+}
+
+@media (max-width: 599px) {
+    .save-confirmation {
+        top: 60%;
+    }
+}
