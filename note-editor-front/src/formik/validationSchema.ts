@@ -1,0 +1,43 @@
+import * as Yup from 'yup';
+import { RequiredStringSchema } from 'yup/lib/string';
+import { AnyObject } from 'yup/lib/types';
+
+type SchemaType = { [key: string]: RequiredStringSchema<string | undefined, AnyObject> };
+
+const setLength = (length: string): string => `Must be ${length} chars`;
+const createSchema = (schema: SchemaType) => Yup.object().shape(schema);
+
+const defUserFormValidSchema = {
+    username: Yup.string()
+        .matches(/[a-zA-Z0-9]/, 'Should contain alphanumeric chars only')
+        .min(3, setLength('3-10'))
+        .max(10, setLength('3-10'))
+        .required("Username is required!"),
+    password: Yup.string()
+        .matches(/(?=.*\d)(?=.*[a-z])(?=.*[A-Z])(?=.*[a-zA-Z])./,
+            'At least 1 number, letters of different cases')
+        .min(6, setLength('6-15'))
+        .max(15, setLength('6-15'))
+        .required("Password is required!"),
+};
+
+export const LoginFormValidSchema = createSchema(defUserFormValidSchema);
+export const SignUpFormValidSchema = createSchema({
+    ...defUserFormValidSchema,
+    passwordConfirmation: Yup.string()
+        .oneOf([Yup.ref('password'), null], 'Passwords must match')
+        .required('Passwords must match')
+});
+
+export const fullNoteValidSchema = createSchema({
+    title: Yup.string()
+        .min(3, setLength("3-5"))
+        .max(50, setLength("3-5"))
+        .required("Required!"),
+    description: Yup.string()
+        .required("Required!")
+        .min(5, setLength("5-300"))
+        .max(300, setLength("5-300"))
+})
+
+export type UserFormValidSchemaType = typeof SignUpFormValidSchema;

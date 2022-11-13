@@ -7,7 +7,7 @@ const mongoose = require('mongoose');
 const connectDB = require('./config/connectDb');
 const verifyJWT = require('./middleware/verifyJWT');
 require('dotenv').config();
-const path = require('path')
+const User = require('./models/user');
 
 connectDB();
 
@@ -25,8 +25,7 @@ app.use(verifyJWT);
 
 app.use('/notes', require('./routes/notes'));
 
-
-mongoose.connection.once('open', () => {
+mongoose.connection.once('open', async () => {
     console.log('db connected');
 });
 

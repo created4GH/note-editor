@@ -1,20 +1,21 @@
-import React from 'react';
-import { NoteType } from '../../../interfaces';
+import React, { MouseEventHandler } from 'react';
+import { NoteType } from '../../../interfaces/common';
 
 import { ReactComponent as NoteOfListFrame } from "../../../assets/svg/frames/note-of-list.svg";
 
-interface Props{
+interface Props {
     note: NoteType;
     className: string;
-    chooseNote?: (this: NoteType) => void;
+    selectNote?: (note: NoteType) => void;
 }
 
-const Note : React.FC<Props> = ({note, className, chooseNote}) => {
+const Note: React.FC<Props> = ({ note, className, selectNote }) => {
+
     return (
         <button
             key={"notes-list_" + note.id}
             className={className}
-            onClick={chooseNote?.bind(note)}
+            onClick={selectNote && (() => selectNote!(note))}
         >
             <NoteOfListFrame className='notes-list__note-frame' />
             <span>{note.title}</span>

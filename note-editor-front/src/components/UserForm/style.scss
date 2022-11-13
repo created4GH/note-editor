@@ -1,0 +1,155 @@
+$default-border: 2px dashed
+    rgba(
+        $color: #2b2828,
+        $alpha: 0.6,
+    );
+$active-border: 2px solid
+    rgba(
+        $color: #4183c0,
+        $alpha: 0.6,
+    );
+
+.user-form-wrapper {
+    position: absolute;
+    height: 100vh;
+    width: 100vw;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 3;
+    background-color: rgba($color: #353232, $alpha: 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.user-form {
+    position: relative;
+    width: clamp(300px, 36vw, 360px);
+    border: $default-border;
+    background-color: #fff;
+    border-radius: 10px;
+    padding: 10px 5px 20px 5px;
+
+    display: flex;
+    flex-direction: column;
+
+    & > div {
+        margin-bottom: 30px;
+    }
+}
+
+.user-form__submit-message {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translate(-50%, -100%);
+    background: #fff;
+    padding: 10px;
+    border-radius: 10px;
+    opacity: 0;
+    animation: appearance 4s;
+}
+
+.user-form__submit-error {
+    color: red;
+    border: 2px dashed red;
+}
+.user-form__submit-success {
+    color: lightgreen;
+    border: 2px dashed lightgreen;
+}
+@keyframes appearance {
+    0% {
+        opacity: 0;
+    }
+    20% {
+        opacity: 1;
+    }
+    80% {
+        opacity: 1;
+    }
+    100% {
+        opacity: 0;
+    }
+}
+
+.user-form__header {
+    position: relative;
+    text-align: initial;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+
+    .user-form__submit-error {
+        color: red;
+        position: absolute;
+    }
+
+    button {
+        color: rgb(56, 56, 241);
+        text-decoration: underline;
+        display: inline-block;
+        position: relative;
+        right: 5px;
+
+        &:hover {
+            cursor: pointer;
+            color: rgb(25, 25, 105);
+        }
+    }
+}
+
+.user-form__input-wrapper {
+    position: relative;
+    padding: 5px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    text-align: left;
+
+    .user-form__error-msg {
+        position: absolute;
+        width: 100%;
+        top: 0;
+        transform: translateY(-100%);
+        text-align: center;
+        font-size: 0.8rem;
+        color: red;
+    }
+
+    label {
+        width: min-content;
+        display: inline-block;
+        margin-right: 10px;
+    }
+
+    .user-form__input {
+        width: 75%;
+        border: $default-border;
+        padding: 5px;
+        border-radius: 10px;
+        display: block;
+
+        &:focus {
+            border: $active-border;
+        }
+    }
+}
+
+.user-form__auth-btn {
+    width: min(200px, 30%);
+    padding: 5px;
+    margin: auto;
+    border: $default-border;
+    border-radius: 10px;
+
+    &:hover,
+    &:focus {
+        border: $active-border;
+    }
+
+    &:active {
+        transform: scale(0.98);
+    }
+}

@@ -4,8 +4,8 @@ import { ReactComponent as SearchFrame } from "../../assets/svg/frames/search.sv
 import { ReactComponent as Loupe } from "../../assets/svg/icons/loupe.svg";
 
 import { DispatchContext } from '../../contexts';
-import { NoteType } from '../../interfaces';
-import { Actions } from '../../reducer';
+import { NoteType } from '../../interfaces/common';
+import { Actions } from '../../useReducer/actions';
 
 import './style.scss';
 
@@ -21,11 +21,11 @@ const Search: React.FC<Props> = ({ notes }) => {
         const value = event.target?.value
         const newNotes = notes
             .filter(({ title }) => title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
-        dispatch({ type: Actions.UPDATE_DISPLAY_NOTES, payload: newNotes });
-        dispatch({ type: Actions.UPDATE_SHOULD_TITLE_BE_AUTOFOCUSED, payload: false });
+        dispatch({ type: Actions.SET_DISPLAY_NOTES, payload: newNotes });
+        dispatch({ type: Actions.SET_SHOULD_TITLE_BE_AUTOFOCUSED, payload: false });
     }
 
-    const handleBlur = () => dispatch({ type: Actions.UPDATE_SHOULD_TITLE_BE_AUTOFOCUSED, payload: true });
+    const handleBlur = () => dispatch({ type: Actions.SET_SHOULD_TITLE_BE_AUTOFOCUSED, payload: true });
 
     return (
         <div className='search'>

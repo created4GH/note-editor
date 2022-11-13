@@ -1,41 +1,65 @@
 const jwt = require('jsonwebtoken');
 const Note = require('../models/note');
+const User = require('../models/user');
 
 const getNotes = async (req, res) => {
+    console.log('get');
     const token = req.cookies?.jwt;
     if (!token) return res.sendStatus(401).json('Unathorized attempt');
 
-    const {username} = jwt.verify(token, process.env.ACCESS_TOKEN_SECRET);
-    const notes = await Note.find({ id: 'string' }).lean();
-    res.json(notes);
+    const { username } = req.user;
+    const user = await User.findOne({ username }).lean();
+    const notes = user?.notes;
+
+    res.status(200).json(notes);
 };
 
 const addNote = async (req, res) => {
+    console.log('add');
     try {
-        await Note.create(req.body);
-        res.json('New note created');
+        const { username } = req.user;
+        const note = {
+            ...req.body,
+            username,
+            createdDate: new Date().getTime(),
+            modifiedDate: new Date().getTime()
+        }
+
+        const user = await User.findOne({ username });
+        user.notes.unshift(note);
+        await user.save();
+        return res.status(201).json(note);
     } catch (error) {
-        res.status(400).json(error.message);
+        return res.status(400).json(error.message);
     }
 };
 
-const updateNote = async (req, res) => {
+const patchNote = async (req, res) => {
+    console.log('update');
     const { id } = req.body;
+    const newInfo = { ...req.body, modifiedDate: new Date().getTime() };
     if (!id) return res.sendStatus(400).json('Id is required!');
-    await Note.findOneAndUpdate({ id }, req.body).lean();
-    res.json('updated');
+    const { username } = req.user;
+    const user = await User.findOne({ username });
+    user.notes = user.notes.map(item => item.id !== id ? item : { ...item, ...newInfo });
+    await user.save();
+    res.sendStatus(201);
 };
 
 const deleteNote = async (req, res) => {
+    console.log('delete');
     const { id } = req.body;
+    const { username } = req.user;
     if (!id) return res.sendStatus(400).json('Id is required!');
-    await Note.deleteOne({ id }).lean();
-    res.json('deleted')
+    const user = await User.findOne({ username });
+    user.notes = user.notes.filter(note => note.id !== id);
+    await user.save();
+    res.json({ message: 'Note deleted' });
 }
 
 module.exports = {
     getNotes,
     addNote,
-    updateNote,
+    patchNote,
     deleteNote
 }

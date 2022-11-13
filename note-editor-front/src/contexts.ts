@@ -1,6 +1,7 @@
 import { createContext, Dispatch, SetStateAction} from "react";
+import { ActionsType, StateType } from "./useReducer/interfaces";
 
-import { StateType, ActionsType, initialState } from "./reducer";
+import { initialState } from "./useReducer/reducer";
 
 
 export const StateContext = createContext<StateType>(initialState);

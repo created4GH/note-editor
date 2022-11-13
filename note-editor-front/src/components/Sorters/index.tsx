@@ -3,11 +3,11 @@ import React, { useContext, useState } from 'react';
 import { ReactComponent as SortByTitle } from "../../assets/svg/icons/sort-by-title.svg";
 import { ReactComponent as SortByDate } from "../../assets/svg/icons/sort-by-date.svg";
 
-import { NoteType } from '../../interfaces';
+import { NoteType } from '../../interfaces/common';
 import { DispatchContext } from '../../contexts';
-import { Actions } from '../../reducer';
 
 import './style.scss';
+import { Actions } from '../../useReducer/actions';
 
 interface Props {
     notes: NoteType[]
@@ -25,9 +25,9 @@ const Sorters: React.FC<Props> = ({ notes }) => {
         callback: React.Dispatch<React.SetStateAction<string>>) => {
         const isDescOrder = order === "desc";
         const newNotes = [...notes.sort((a, b) => {
-            return (isDescOrder && a[parameter] > b[parameter]) ? 1 : -1;
+            return (isDescOrder && a[parameter]! > b[parameter]!) ? 1 : -1;
         })];
-        dispatch({ type: Actions.UPDATE_DISPLAY_NOTES, payload: newNotes });
+        dispatch({ type: Actions.SET_DISPLAY_NOTES, payload: newNotes });
         callback(isDescOrder ? "asc" : "desc");
     }
 
