@@ -1,6 +1,6 @@
 import { NOTES_URL } from "../constants/url";
 import { makeRequest } from "../helpers";
-import { NoteType, HandleNoteChange } from "../interfaces/common";
+import { HandleNoteChange } from "../interfaces/common";
 
 export const getNotes = async () => {
     return makeRequest(NOTES_URL, 'GET');

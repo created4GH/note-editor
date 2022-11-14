@@ -1,0 +1,16 @@
+@mixin foreground {
+    position: absolute;
+    top: 0;
+    width: min(842px, 84.2vw);
+    height: calc(min(842px, 84.2vw) / 1.55);
+    box-sizing: content-box;
+    margin: -100vw;
+    padding: 100vw;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+    @media (max-width: 599px) {
+       height: calc(clamp(312px, 90vw, 900px) / 1.5006896552 * 2);
+    }
+}

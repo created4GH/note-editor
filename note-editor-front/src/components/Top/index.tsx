@@ -2,15 +2,14 @@ import React, { useContext } from 'react';
 
 import Sorters from '../../components/Sorters';
 import Search from '../../components/Search';
-import Auth from '../Auth';
+import Entry from '../Entry';
 
-import { StateContext } from '../../contexts';
+import { StateContext } from '../../context/context';
 
 import './style.scss';
-import { boolean } from 'yup/lib/locale';
 
 interface Props{
-    // updateIsDisplayLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
+    // updateIsLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const Top : React.FC<Props> = () => {
@@ -20,7 +19,7 @@ const Top : React.FC<Props> = () => {
         <div className="top">
             <Sorters notes={notes}/>
             <Search notes={notes}/>
-            <Auth isLoggedIn={isLoggedIn}/>
+            <Entry isLoggedIn={isLoggedIn}/>
         </div>
     );
 };

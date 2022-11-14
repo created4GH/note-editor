@@ -1,41 +1,34 @@
-.auth-btn {
-    $this-size: clamp(20px, 3.8vw, 38px);
+@use '../../assets/styles/_pop-up';
+
+.entry-btn {
+    $this-size: clamp(25px, 3.8vw, 38px);
     width: $this-size;
     height: $this-size;
     position: absolute;
     right: 0;
     top: 0;
-
     display: flex;
     align-items: center;
     justify-content: center;
 
-    .auth-btn__login-icon,
-    .auth-btn__logout-icon {
-        width: 80%;
-        height: 80%;
+    .entry-btn__login-icon,
+    .entry-btn__logout-icon {
+        width: 90%;
+        height: 90%;
 
         fill: rgb(36, 33, 33);
     }
 }
 
-.auth-message-wrapper {
-    position: absolute;
+.entry-message-wrapper {
+    @include pop-up.foreground;
     width: min(842px, 84.2vw);
     height: calc(min(842px, 84.2vw) / 1.55);
-    top: 0;
-    left: 0;
-    margin: -100vw;
-    padding: 100vw;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    box-sizing: content-box;
     background-color: rgba($color: #353232, $alpha: 0.5);
     z-index: 3;
 }
 
-.auth-message {
+.entry-message {
     position: relative;
     background: #fff;
     padding: 30px;
@@ -43,7 +36,7 @@
     border-radius: 10px;
 }
 
-.auth-message--loading {
+.entry-message--loading {
     &::after {
         content: "";
         position: absolute;
@@ -62,11 +55,11 @@
     }
 }
 
-.auth-message--error {
+.entry-message--error {
     color: red;
     border: 2px solid red;
 }
-.auth-message--success {
+.entry-message--success {
     color: rgb(88, 179, 88);
     border: 2px solid rgb(88, 179, 88);
 }

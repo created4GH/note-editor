@@ -8,37 +8,33 @@ import { ReactComponent as DescriptionFrame } from "../../assets/svg/frames/desc
 import { ReactComponent as SaveFrame } from "../../assets/svg/frames/save.svg";
 import { ReactComponent as TrashBin } from "../../assets/svg/icons/trash-bin.svg";
 
-import { HandleNoteChange, NoteType } from '../../interfaces/common';
-import { DispatchContext, StateContext } from '../../contexts';
+import { NoteType } from '../../interfaces/common';
+import { DispatchContext, StateContext } from '../../context/context';
 
 import './style.scss';
 import { fullNoteValidSchema } from '../../formik/validationSchema';
-import { addNote, deleteNote, getNotes, patchNote } from '../../requests/notes';
-import { getHandleDispatch, retreieveNotes, setStorageNotes } from '../../helpers';
+import { deleteNote } from '../../api/notes';
+import { getHandleDispatch, retreieveNotes } from '../../helpers';
 import { Actions } from '../../useReducer/actions';
 import { deleteNoteSync, saveNotesAsync, saveNotesSync } from '../../helpers/notes';
-const { SET_NOTES, SET_IS_DATA_FETCHING,
-    SET_SELECTED_NOTE, SET_SHOULD_CHOSEN_NOTE_BE_AUTO_UPDATED } = Actions;
+const { SET_NOTES, SET_IS_DATA_FETCHING, SET_SELECTED_NOTE } = Actions;
 
 interface Props {
     notes: NoteType[];
     displayNotes: NoteType[];
     selectedNote: NoteType | null;
+    newNoteElement: JSX.Element | null;
     setNewNoteElement: React.Dispatch<React.SetStateAction<JSX.Element | null>>;
     setWasSaved: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsSavingFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
 interface ValuesType {
     title: string;
     description: string;
 }
-type CbType = ({ id }: NoteType) => NoteType;
-type ArrayMethod = <U>(callbackfn: (value: NoteType, index: number, array: NoteType[])
-    => U, thisArg?: any) => U[];
-
 
 const FullNote: React.FC<Props> = ({ notes, selectedNote,
-    displayNotes,
-    setNewNoteElement, setWasSaved,
+    displayNotes, newNoteElement, setNewNoteElement, setWasSaved, setIsSavingFetching
 }) => {
 
     const dispatch = useContext(DispatchContext)!;
@@ -49,23 +45,24 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
     const [wasChanged, updateWasChanged] = useState<boolean>(false);
 
     const { title, description } = selectedNote!;
+
     const handleInput = () => updateWasChanged(true);
 
-    // const updateNotes = async () => {
-    //     handleDispatch(SET_IS_DATA_FETCHING, true);
-    //     const updatedNotes = isLoggedIn ? await getNotes()
-    //         : updateNotesSync(note, requestType, isDelete);
-    //     if (!isDelete) {
-    //         handleDispatch(SET_SELECTED_NOTE, note);
-    //         // handleDispatch(SET_SHOULD_CHOSEN_NOTE_BE_AUTO_UPDATED, false);
-    //     };
-    //     handleDispatch(SET_IS_DATA_FETCHING, false);
-    // }
+    const updateNotes = async (delay: number, selectedNote: NoteType) => {
+        setTimeout(async () => {
+            handleDispatch(SET_IS_DATA_FETCHING, true);
+            const notes = await retreieveNotes(isLoggedIn);
+            handleDispatch(SET_NOTES, notes);
+            updateWasChanged(false);
+            newNoteElement && setNewNoteElement(null);
+            handleDispatch(SET_SELECTED_NOTE, selectedNote);
+            handleDispatch(SET_IS_DATA_FETCHING, false);
+        }, delay);
+    }
 
     const save = async ({ title, description }: ValuesType) => {
         const isNewNote = selectedNote?.id === "dummy";
         if (!wasChanged && !isNewNote) return;
-        handleDispatch(SET_IS_DATA_FETCHING, true);
         let note: NoteType;
         if (isNewNote) {
             note = {
@@ -75,31 +72,26 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
             };
         }
         else note = { ...selectedNote!, title, description }
+        setIsSavingFetching(true);
         isLoggedIn ? await saveNotesAsync(note, isNewNote) : saveNotesSync(note, isNewNote, notes);
-        handleDispatch(SET_IS_DATA_FETCHING, false);
+        setIsSavingFetching(false);
         setWasSaved(true);
-        setTimeout(async () => {
-            const notes = await retreieveNotes(isLoggedIn);
-            handleDispatch(SET_NOTES, notes);
-            updateWasChanged(false);
-            setNewNoteElement(null);
-        }, 1000);
+        updateNotes(1500, note);
     }
 
     const removeNote = async () => {
         const note = selectedNote!;
         if (note?.id === "dummy") {
             setNewNoteElement(null);
-            displayNotes.length && handleDispatch(SET_SELECTED_NOTE, displayNotes[0]);
+            const selectedNote = displayNotes.length ? displayNotes[0] : null;
+            handleDispatch(SET_SELECTED_NOTE, selectedNote);
             return;
         }
         let index = displayNotes.findIndex(({ id }) => id === note?.id);
         index += index === (displayNotes.length - 1) ? (-1) : 1;
-        isLoggedIn ? await deleteNote(note) : deleteNoteSync(note, notes);
-        // updateNotes(note, 'delete');
         const indexedNote = displayNotes[index] || null;
-        handleDispatch(SET_SELECTED_NOTE, indexedNote);
-        handleDispatch(SET_SHOULD_CHOSEN_NOTE_BE_AUTO_UPDATED, false);
+        isLoggedIn ? await deleteNote(note) : deleteNoteSync(note, notes);
+        updateNotes(0, indexedNote);
     }
 
     useEffect(() => {

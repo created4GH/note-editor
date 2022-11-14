@@ -1,3 +1,5 @@
+@use '../../assets/styles/_pop-up';
+
 $default-border: 2px dashed
     rgba(
         $color: #2b2828,
@@ -10,17 +12,9 @@ $active-border: 2px solid
     );
 
 .user-form-wrapper {
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    @include pop-up.foreground;
     z-index: 3;
     background-color: rgba($color: #353232, $alpha: 0.5);
-    display: flex;
-    justify-content: center;
-    align-items: center;
 }
 
 .user-form {
@@ -137,7 +131,7 @@ $active-border: 2px solid
     }
 }
 
-.user-form__auth-btn {
+.user-form__entry-btn {
     width: min(200px, 30%);
     padding: 5px;
     margin: auto;

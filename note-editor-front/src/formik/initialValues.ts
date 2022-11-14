@@ -1,10 +1,11 @@
-const defUserFormInitVals = {
+const defEntryFormInitVals = {
     username: '',
     password: '',
 };
 
-export const LoginFormInitVals = defUserFormInitVals;
+export const LoginFormInitVals = defEntryFormInitVals;
+
 export const SignUpFormInitVals = {
-    ...defUserFormInitVals,
+    ...defEntryFormInitVals,
     passwordConfirmation: ''
 };

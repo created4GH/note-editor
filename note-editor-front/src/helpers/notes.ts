@@ -1,12 +1,11 @@
 import { setStorageNotes } from ".";
 import { NoteType } from "../interfaces/common";
-import { addNote, patchNote } from "../requests/notes";
+import { addNote, patchNote } from "../api/notes";
 
 export const saveNotesAsync = async (note: NoteType, isNewNote: boolean) => {
     const apiCall = isNewNote ? addNote : patchNote;
     try {
         await apiCall(note);
-        setWasSaved(true);
     } catch (error) {
         console.log(error)
     }
@@ -24,6 +23,4 @@ export const deleteNoteSync = (note : NoteType, notes : NoteType[]) => {
     setStorageNotes(updatedNotes);
 }
 
-function setWasSaved(arg0: boolean) {
-    throw new Error("Function not implemented.");
-}
+

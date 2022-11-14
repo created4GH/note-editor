@@ -14,8 +14,9 @@
 .notes-list__note {
     position: relative;
 
-    &:not(.chosen-note){
-        &:hover, &:focus {
+    &:not(.chosen-note) {
+        &:hover,
+        &:focus {
             font-size: 105%;
 
             path {
@@ -26,7 +27,7 @@
     }
 }
 
-.chosen-note{
+.chosen-note {
     path {
         stroke: #0000ff;
     }
@@ -65,6 +66,10 @@
     $this-width: clamp(120px, 28.12vw, 281.2px);
     width: $this-width;
     height: calc($this-width / $corr);
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    padding: 10px;
+    overflow: hidden;
 
     &:not(:last-child) {
         margin-bottom: min(25.9px, 2.59vw);
@@ -101,6 +106,7 @@
 
     .notes-list__note {
         flex-shrink: 0;
+        padding: 5px;
 
         &:not(:last-child),
         &:last-child {

@@ -4,7 +4,7 @@ import { v4 as uuid } from 'uuid';
 import { ReactComponent as AddNewFrame } from "../../assets/svg/frames/new.svg";
 import Note from './Note';
 
-import { DispatchContext } from '../../contexts';
+import { DispatchContext } from '../../context/context';
 import { NoteType } from '../../interfaces/common';
 import { Actions } from '../../useReducer/actions';
 import './style.scss';

@@ -1,19 +1,15 @@
-// @font-face {
-//   font-family: "Virgil";
-//   src: url("https://excalidraw.com/Virgil.woff2");
-// }
-// @font-face {
-//   font-family: "Cascadia";
-//   src: url("https://excalidraw.com/Cascadia.woff2");
-// }
+@font-face {
+  font-family: "Virgil";
+  src: url("https://excalidraw.com/Virgil.woff2");
+}
+@font-face {
+  font-family: "Cascadia";
+  src: url("https://excalidraw.com/Cascadia.woff2");
+}
 
 $correlation: calc(1088 / 725);
 $resp-width: clamp(312px, 90vw, 900px);
 $resp-height: calc($resp-width / $correlation);
-
-:root{
-  overflow: hidden;
-}
 
 .App {
   max-width: 1200px;

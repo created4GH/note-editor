@@ -3,11 +3,15 @@ import React, { ChangeEvent, useContext, useRef } from 'react';
 import { ReactComponent as SearchFrame } from "../../assets/svg/frames/search.svg";
 import { ReactComponent as Loupe } from "../../assets/svg/icons/loupe.svg";
 
-import { DispatchContext } from '../../contexts';
+import { DispatchContext } from '../../context/context';
+import { getHandleDispatch } from '../../helpers';
 import { NoteType } from '../../interfaces/common';
 import { Actions } from '../../useReducer/actions';
+import { DisplayNotesCallback } from '../../useReducer/interfaces';
 
 import './style.scss';
+
+const { SET_DISPLAY_NOTES, SET_DISPLAY_NOTES_CALLBACK, SET_SHOULD_TITLE_BE_AUTOFOCUSED } = Actions;
 
 interface Props {
     notes: NoteType[]
@@ -15,17 +19,22 @@ interface Props {
 
 const Search: React.FC<Props> = ({ notes }) => {
     const dispatch = useContext(DispatchContext)!;
+    const handleDispatch = getHandleDispatch(dispatch);
     const searchRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
-        const value = event.target?.value
-        const newNotes = notes
-            .filter(({ title }) => title.toLocaleLowerCase().includes(value.toLocaleLowerCase()));
-        dispatch({ type: Actions.SET_DISPLAY_NOTES, payload: newNotes });
-        dispatch({ type: Actions.SET_SHOULD_TITLE_BE_AUTOFOCUSED, payload: false });
+        const value = event.target?.value.toLocaleLowerCase();
+        const callback: DisplayNotesCallback = (notes) => {
+            return notes.filter(({ title }) => title.toLocaleLowerCase().includes(value));
+        }
+        const newNotes = callback(notes);
+        const displayNotesCallback = value ? callback : null;
+        handleDispatch(SET_DISPLAY_NOTES, newNotes);
+        handleDispatch(SET_DISPLAY_NOTES_CALLBACK, displayNotesCallback);
+        handleDispatch(SET_SHOULD_TITLE_BE_AUTOFOCUSED, false);
     }
 
-    const handleBlur = () => dispatch({ type: Actions.SET_SHOULD_TITLE_BE_AUTOFOCUSED, payload: true });
+    const handleBlur = () => handleDispatch(SET_SHOULD_TITLE_BE_AUTOFOCUSED, true);;
 
     return (
         <div className='search'>

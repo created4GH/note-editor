@@ -2,16 +2,15 @@ import React, { useState, useContext, useEffect } from 'react';
 
 import FullNote from '../FullNote';
 import NotesList from '../NotesList';
-import SaveConfirmation from '../SaveConfirmation';
 
-import { DispatchContext, StateContext } from '../../contexts';
+import { DispatchContext, StateContext } from '../../context/context';
 
 import './style.scss';
 import { NoteType } from '../../interfaces/common';
 import { getHandleDispatch, retreieveNotes } from '../../helpers';
 import { Actions } from '../../useReducer/actions';
-import Loader from '../Loader/MainLoader';
-import { getNotes } from '../../requests/notes';
+import Loader from '../loaders/MainLoader';
+import Saving from '../Saving';
 const { SET_NOTES, SET_IS_DATA_FETCHING,
     SET_SELECTED_NOTE, } = Actions;
 
@@ -19,7 +18,6 @@ const Main = () => {
     const { notes, displayNotes, isDataFetching, isLoggedIn, selectedNote } = useContext(StateContext);
     const dispatch = useContext(DispatchContext)!;
 
-    // const [selectedNote, setSelectedNote] = useState<NoteType | null>(null);
     const [newNoteElement, setNewNoteElement] = useState<JSX.Element | null>(null);
     const [wasSaved, setWasSaved] = useState<boolean>(false);
     const [isSavingFetching, setIsSavingFetching] = useState<boolean>(false);
@@ -43,19 +41,10 @@ const Main = () => {
         if (wasSaved) {
             const timer = setTimeout(() => {
                 setWasSaved(false);
-            }, 3000);
+            }, 2000);
             return () => clearTimeout(timer);
         }
     }, [wasSaved])
-
-    // useEffect(() => {
-    //     if (shouldselectedNoteBeAutoUpdated && displayNotes.length) {
-    //         handleDispatch(SET_SELECTED_NOTE, displayNotes[0]);
-    //     }
-    //     else {
-    //         handleDispatch(SET_SHOULD_CHOSEN_NOTE_BE_AUTO_UPDATED, true)
-    //     }
-    // }, [displayNotes])
 
     return (
         <div className='main'>
@@ -73,13 +62,15 @@ const Main = () => {
                             notes={notes}
                             selectedNote={selectedNote}
                             displayNotes={displayNotes}
+                            newNoteElement={newNoteElement}
                             setNewNoteElement={setNewNoteElement}
                             setWasSaved={setWasSaved}
+                            setIsSavingFetching={setIsSavingFetching}
                         />)
                         : null}
                 </>
             }
-            {wasSaved && <SaveConfirmation />}
+            {(isSavingFetching || wasSaved) && <Saving isSavingFetching={isSavingFetching} />}
         </div>
     );
 };

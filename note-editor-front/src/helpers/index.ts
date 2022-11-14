@@ -1,7 +1,7 @@
-import { Keys } from "../constants/localStorage";
+import { Keys, TTL } from "../constants/localStorage";
 import { REQUEST_OPTIONS } from "../constants/request";
 import { NoteType } from "../interfaces/common";
-import { getNotes } from "../requests/notes";
+import { getNotes } from "../api/notes";
 import { Actions } from "../useReducer/actions";
 import { ActionsType, Payload } from "../useReducer/interfaces";
 
@@ -18,6 +18,11 @@ export const makeRequest: MakeRequestType = async (url, method, body) => {
         ...REQUEST_OPTIONS,
         method
     };
+
+    if (['POST', 'PATCH', 'PUT', 'DELETE'].includes(method)) {
+        requestParams.headers['Content-Type'] = 'application/json';
+    }
+
     if (body) {
         const stringifiedBody = JSON.stringify({ ...body });
         requestParams.body = stringifiedBody;
@@ -54,3 +59,11 @@ export const retreieveNotes = async (isLoggedIn: boolean) => {
 
 export const setStorageNotes = (notes: NoteType[]) =>
     localStorage.setItem(Keys.NOTES, JSON.stringify(notes));
+
+export const setStorageIsLoggedIn = () => {
+    const storageItem = JSON.stringify({
+        isLoggedIn: true,
+        ttl: Date.now() + TTL.IS__LOGGED_IN_TTL
+    });
+    localStorage.setItem(Keys.IS_LOGGED_IN, storageItem);
+} 

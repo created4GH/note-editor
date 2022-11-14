@@ -1,6 +1,6 @@
-<svg viewBox="0 0 80 15" width="66" height="27" xmlns="http://www.w3.org/2000/svg" version="1.1">
+<svg viewBox="0 0 42 17" width="42" height="17" xmlns="http://www.w3.org/2000/svg" version="1.1">
     <g>
-        <text x="0" y="14" font-family="Virgil, Segoe UI Emoji" font-size="20px" fill="#000000" text-anchor="start"
-            direction="ltr">Date ↑↓</text>
+        <text font-family="Virgil, Segoe UI Emoji" font-size="13px" fill="#000000" dominant-baseline="text-before-edge"
+            text-anchor="start" direction="ltr">Date ↑↓</text>
     </g>
 </svg>

@@ -2,50 +2,47 @@ import { ErrorMessage, Field, Form, Formik } from 'formik';
 import React, { MouseEvent, useContext, useMemo, useState } from 'react';
 import { v4 as uuid } from 'uuid';
 
-import './style.scss';
-import { DispatchContext } from '../../contexts';
+import { DispatchContext } from '../../context/context';
 import { InitialsValuesType } from '../../interfaces/common';
-import { UserFormValidSchemaType } from '../../formik/validationSchema';
-import { TTL, Keys } from '../../constants/localStorage';
-import { getHandleDispatch } from '../../helpers';
+import { login, singUp } from '../../api/user';
+import { getHandleDispatch, setStorageIsLoggedIn } from '../../helpers';
+import { LoginFormInitVals } from '../../formik/initialValues';
+import { SignUpFormInitVals } from '../../formik/initialValues';
+import { LoginFormValidSchema } from '../../formik/validationSchema';
+import { SignUpFormValidSchema } from '../../formik/validationSchema';
+import { HeaderInfo, InputsInfo } from '../../constants/entryForm';
+
+import './style.scss';
+
 import { Actions } from '../../useReducer/actions';
-const {SET_IS_DISPLAY_AUTH_FORM, SET_IS_LOGGED_IN, SET_SELECTED_NOTE} = Actions;
+const { SET_IS_LOGGED_IN, SET_SELECTED_NOTE } = Actions;
 
 interface Props {
-    headerInfo: {
-        title: string;
-        btnText: string;
-    };
-    updateIsDisplayLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
-    inputsInfo: {
-        title: string;
-        name: string;
-        type: string;
-        placeholder: string;
-    }[];
-    submitBtnText: string;
-    validationSchema: UserFormValidSchemaType;
-    initialValues: {
-        username: string;
-        password: string;
-        passwordConfirmation?: string;
-    }
-    apiRequest: (username: string, password: string) => Promise<any>;
+    isLoginForm: boolean;
+    updateIsLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setIsDisplayEntryForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const UserForm: React.FC<Props> = ({ headerInfo, updateIsDisplayLoginForm, inputsInfo,
-    apiRequest, submitBtnText, validationSchema, initialValues }) => {
+const EntryForm: React.FC<Props> = ({ isLoginForm, updateIsLoginForm, setIsDisplayEntryForm }) => {
 
     const dispatch = useContext(DispatchContext)!;
     const handleDispatch = getHandleDispatch(dispatch);
+
     const [message, updateMessage] = useState<string>('');
     const [messageClassName, updateMessageClassName] = useState<string>('');
 
+    const headerInfo = isLoginForm ? HeaderInfo.login : HeaderInfo.signUp;
+    const inputsInfo = isLoginForm ? InputsInfo.login : InputsInfo.signUp;
+    const submitBtnText = isLoginForm ? 'Log in' : 'Sign up';
+    const apiRequest = isLoginForm ? login : singUp;
+    const initialValues = isLoginForm ? LoginFormInitVals : SignUpFormInitVals;
+    const validationSchema = isLoginForm ? LoginFormValidSchema : SignUpFormValidSchema;
+
+
+
     const closeForm = (event: MouseEvent<HTMLDivElement>) => {
         const className = (event.target as HTMLDivElement).className;
-        if (className === 'user-form-wrapper') {
-            dispatch({ type: Actions.SET_IS_DISPLAY_AUTH_FORM, payload: false });
-        }
+        className === 'user-form-wrapper' && setIsDisplayEntryForm(false);
     }
 
     const onSubmit = async ({ username, password }: InitialsValuesType) => {
@@ -55,15 +52,11 @@ const UserForm: React.FC<Props> = ({ headerInfo, updateIsDisplayLoginForm, input
             updateMessage('Success!');
             setTimeout(() => {
                 updateMessage('');
-                handleDispatch(SET_IS_DISPLAY_AUTH_FORM, false);
+                setIsDisplayEntryForm(false);
                 handleDispatch(SET_SELECTED_NOTE, null);
                 handleDispatch(SET_IS_LOGGED_IN, true);
-                const storageItem = JSON.stringify({
-                    isLoggedIn: true,
-                    ttl: Date.now() + TTL.IS__LOGGED_IN_TTL
-                });
-                localStorage.setItem(Keys.IS_LOGGED_IN, storageItem);
-                updateIsDisplayLoginForm(true);
+                setStorageIsLoggedIn();
+                updateIsLoginForm(true);
             }, 500);
         } catch (error) {
             updateMessageClassName('user-form__submit-error');
@@ -74,7 +67,7 @@ const UserForm: React.FC<Props> = ({ headerInfo, updateIsDisplayLoginForm, input
         }
     };
 
-    const changeForm = () => updateIsDisplayLoginForm(prevState => !prevState);
+    const changeForm = () => updateIsLoginForm(prevState => !prevState);
 
     const mappedInputs = useMemo(() => {
         return inputsInfo.map(({ title, name, type, placeholder }) => {
@@ -116,7 +109,7 @@ const UserForm: React.FC<Props> = ({ headerInfo, updateIsDisplayLoginForm, input
                     </div>
                     {mappedInputs}
                     <button
-                        className='user-form__auth-btn'
+                        className='user-form__entry-btn'
                         type='submit'
                     >
                         {submitBtnText}
@@ -127,4 +120,4 @@ const UserForm: React.FC<Props> = ({ headerInfo, updateIsDisplayLoginForm, input
     );
 };
 
-export default UserForm;
+export default EntryForm;

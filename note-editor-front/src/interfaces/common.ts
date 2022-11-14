@@ -13,3 +13,4 @@ export interface InitialsValuesType {
 }
 
 export type HandleNoteChange = (note: NoteType) => Promise<any>;
+
