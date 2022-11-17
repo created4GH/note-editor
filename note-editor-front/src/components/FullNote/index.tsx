@@ -17,7 +17,7 @@ import { deleteNoteSync, receiveNotes, saveNotesAsync, saveNotesSync } from '../
 import './style.scss';
 
 import { Actions } from '../../useReducer/actions';
-const { SET_NOTES, SET_IS_DATA_FETCHING, SET_SELECTED_NOTE, 
+const { SET_NOTES, SET_IS_DATA_FETCHING, SET_SELECTED_NOTE,
     SET_SEARCH_INPUT, SET_GLOBAL_ERROR } = Actions;
 
 interface Props {
@@ -47,22 +47,23 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
 
     const handleInput = () => updateWasChanged(true);
 
-    const updateNotes = async (delay: number, selectedNote: NoteType) => {
-        setTimeout(async () => {
+    const updateNotes = async (selectedNote: NoteType) => {
             handleDispatch(SET_IS_DATA_FETCHING, true);
             try {
                 const notes = await receiveNotes(isLoggedIn);
+                handleDispatch(SET_SELECTED_NOTE, selectedNote);
                 handleDispatch(SET_NOTES, notes);
                 updateWasChanged(false);
+                setWasSaved(false);
                 newNoteElement && setNewNoteElement(null);
-                handleDispatch(SET_SELECTED_NOTE, selectedNote);
             } catch (error) {
                 handleDispatch(SET_GLOBAL_ERROR, ((error as Error).message));
             }
             finally {
-                handleDispatch(SET_IS_DATA_FETCHING, false);
+                setTimeout(() => {
+                    handleDispatch(SET_IS_DATA_FETCHING, false);
+                }, 200);
             }
-        }, delay);
     }
 
     const save = async ({ title, description }: ValuesType) => {
@@ -81,7 +82,9 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
         isLoggedIn ? await saveNotesAsync(note, isNewNote) : saveNotesSync(note, isNewNote, notes);
         setIsSavingFetching(false);
         setWasSaved(true);
-        updateNotes(1500, note);
+        setTimeout(() => {
+            updateNotes(note);
+        }, 1000);
     }
 
     const removeNote = async () => {
@@ -95,9 +98,9 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
         let index = displayNotes.findIndex(({ id }) => id === note?.id);
         index += index === (displayNotes.length - 1) ? (-1) : 1;
         const indexedNote = displayNotes[index] || null;
-        if(!indexedNote && searchInput) handleDispatch(SET_SEARCH_INPUT, '');
+        if (!indexedNote && searchInput) handleDispatch(SET_SEARCH_INPUT, '');
         isLoggedIn ? await deleteNote(note) : deleteNoteSync(note, notes);
-        updateNotes(0, indexedNote);
+        updateNotes(indexedNote);
     }
 
     useEffect(() => {

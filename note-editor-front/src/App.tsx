@@ -20,7 +20,7 @@ import { Actions } from './useReducer/actions';
 const { SET_GLOBAL_ERROR } = Actions;
 
 const App = () => {
-  const { isLoggedIn } = useContext(StateContext);
+  const { isLoggedIn, globalError } = useContext(StateContext);
   const handleDispatch = useContext(DispatchContext)!;
   const { isLightTheme } = useContext(ThemeContext);
 
@@ -32,7 +32,7 @@ const App = () => {
         await refreshToken();
         setStorageIsLoggedIn();
       } catch (error) {
-        handleDispatch(SET_GLOBAL_ERROR, (error as string));
+        handleDispatch(SET_GLOBAL_ERROR, (error as Error).message);
       }
     }
   };
@@ -45,7 +45,7 @@ const App = () => {
   return (
     <div className={appWrapperClassName}>
       <OnlineStatus />
-      <GlobalError />
+      {globalError && <GlobalError />}
       <div className='App'>
         <div className="outter-container">
           <Top />

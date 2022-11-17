@@ -9,10 +9,10 @@ import { SignUpFormValidSchema } from '../../formik/validationSchema';
 
 interface Props {
     setIsLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsDisplayEntryForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setShouldDisplayEntryForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
-const SignupForm: React.FC<Props> = ({ setIsLoginForm, setIsDisplayEntryForm }) => {
+const SignupForm: React.FC<Props> = ({ setIsLoginForm, setShouldDisplayEntryForm }) => {
 
     return (<EntryForm
         initialValues={SignUpFormInitVals}
@@ -22,7 +22,7 @@ const SignupForm: React.FC<Props> = ({ setIsLoginForm, setIsDisplayEntryForm }) 
         submitBtnText='Sign up'
         apiRequest={singUp}
         setIsLoginForm={setIsLoginForm}
-        setIsDisplayEntryForm={setIsDisplayEntryForm}
+        setShouldDisplayEntryForm={setShouldDisplayEntryForm}
     />
     );
 };

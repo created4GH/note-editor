@@ -19,7 +19,7 @@ const defInputsInfo = [
     {
         title: 'Password',
         name: 'password',
-        type: 'text',
+        type: 'password',
         placeholder: 'Enter your password'
     }
 ]
@@ -29,7 +29,7 @@ export const InputsInfo = {
     {
         title: 'Confirm Password',
         name: 'passwordConfirmation',
-        type: 'text',
+        type: 'password',
         placeholder: 'Confirm your password'
     }
     ],

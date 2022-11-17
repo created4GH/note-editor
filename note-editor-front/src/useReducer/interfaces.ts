@@ -10,7 +10,6 @@ export interface StateType {
     searchInput: string;
     shouldTitleBeAutofocused: boolean;
     isDataFetching: boolean;
-    isDisplayEntryForm: boolean;
     globalError: string | null;
 }
 

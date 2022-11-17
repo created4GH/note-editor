@@ -27,11 +27,11 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
     });
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
-    const [isDisplayEntryForm, setIsDisplayEntryForm] = useState<boolean>(false);
+    const [ShouldDisplayEntryForm, setShouldDisplayEntryForm] = useState<boolean>(false);
 
     const btnTitle = isLoggedIn ? 'Logout' : 'Login';
     const handleClick = () => isLoggedIn ? handleLogout() : handleLogin();
-    const handleLogin = async () => setIsDisplayEntryForm(true);
+    const handleLogin = async () => setShouldDisplayEntryForm(true);
 
     const handleLogout = async () => {
         setIsLoading(true);
@@ -58,7 +58,7 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
         finally {
             setTimeout(() => {
                 setIsLoading(false);
-            }, 1500);
+            }, 1700);
         }
     };
 
@@ -75,14 +75,14 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
                 {icon}
             </button>
             {isLoading && entryMsg}
-            {isDisplayEntryForm && (isLoginForm ?
+            {ShouldDisplayEntryForm && (isLoginForm ?
                 <LoginForm
                     setIsLoginForm={setIsLoginForm}
-                    setIsDisplayEntryForm={setIsDisplayEntryForm}
+                    setShouldDisplayEntryForm={setShouldDisplayEntryForm}
                 />
                 : <SignupForm
                     setIsLoginForm={setIsLoginForm}
-                    setIsDisplayEntryForm={setIsDisplayEntryForm}
+                    setShouldDisplayEntryForm={setShouldDisplayEntryForm}
                 />)
             }
         </>

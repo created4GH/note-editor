@@ -33,7 +33,7 @@ const Main = () => {
                 handleDispatch(SET_SELECTED_NOTE, notes[0]);
             }
         } catch (error) {
-            handleDispatch(SET_GLOBAL_ERROR, ((error as Error).message));
+            handleDispatch(SET_GLOBAL_ERROR, (error as Error).message);
         }
         finally {
             handleDispatch(SET_IS_DATA_FETCHING, false);
@@ -77,6 +77,7 @@ const Main = () => {
                         : null}
                 </>
             }
+            {/* {true && <Saving isSavingFetching={isSavingFetching} />} */}
             {(isSavingFetching || wasSaved) && <Saving isSavingFetching={isSavingFetching} />}
         </div>
     );

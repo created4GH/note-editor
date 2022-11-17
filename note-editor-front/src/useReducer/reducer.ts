@@ -13,7 +13,6 @@ export const initialState: StateType = {
     searchInput: '',
     shouldTitleBeAutofocused: true,
     isDataFetching: true,
-    isDisplayEntryForm: false,
     globalError: '',
 };
 
@@ -55,9 +54,6 @@ export const reducer = (state: StateType, action: ActionsType) => {
             break;
         case Actions.SET_IS_DATA_FETCHING:
             return { ...state, isDataFetching: payload as boolean };
-            break;
-        case Actions.SET_IS_DISPLAY_AUTH_FORM:
-            return { ...state, isDisplayEntryForm: payload as boolean };
             break;
         case Actions.SET_GLOBAL_ERROR:
             return { ...state, globalError: payload as string | null };

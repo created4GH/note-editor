@@ -34,11 +34,11 @@ interface Props {
     submitBtnText: string;
     apiRequest: EntryFnType;
     setIsLoginForm: React.Dispatch<React.SetStateAction<boolean>>;
-    setIsDisplayEntryForm: React.Dispatch<React.SetStateAction<boolean>>;
+    setShouldDisplayEntryForm: React.Dispatch<React.SetStateAction<boolean>>;
 }
 
 const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInfo, inputsInfo,
-    submitBtnText, apiRequest, setIsLoginForm, setIsDisplayEntryForm }) => {
+    submitBtnText, apiRequest, setIsLoginForm, setShouldDisplayEntryForm }) => {
         
     const handleDispatch = useContext(DispatchContext)!;
     const [isLoading, setIsLoading] = useState<boolean>(false);
@@ -49,7 +49,10 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
 
     const closeForm = (event: MouseEvent<HTMLDivElement>) => {
         const className = (event.target as HTMLDivElement).className;
-        className === 'entry-form-wrapper' && setIsDisplayEntryForm(false);
+        if(className === 'entry-form-wrapper'){
+            setShouldDisplayEntryForm(false);
+            setIsLoginForm(true);
+        }
     }
 
     const onSubmit = async ({ username, password }: InitialsValuesType) => {
@@ -67,12 +70,12 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
                 })
             }, 1000);
             setTimeout(() => {
-                setIsDisplayEntryForm(false);
+                setShouldDisplayEntryForm(false);
                 handleDispatch(SET_SELECTED_NOTE, null);
                 handleDispatch(SET_IS_LOGGED_IN, true);
                 setStorageIsLoggedIn();
                 setIsLoginForm(true);
-            }, 1500);
+            }, 1700);
         } catch (error) {
             updateMessage({
                 msgText: (error as Error).message,
@@ -82,7 +85,7 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
         finally {
             setTimeout(() => {
                 setIsLoading(false);
-            }, 1500);
+            }, 1700);
         }
     };
 

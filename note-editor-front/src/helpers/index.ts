@@ -1,6 +1,4 @@
 import { REQUEST_OPTIONS } from "../constants/request";
-import { Actions } from "../useReducer/actions";
-import { ActionsType, Payload } from "../useReducer/interfaces";
 
 interface RequestParams {
     headers: { [key: string]: string },
@@ -25,10 +23,17 @@ export const makeRequest: MakeRequestType = async (url, method, body) => {
         const stringifiedBody = JSON.stringify({ ...body });
         requestParams.body = stringifiedBody;
     }
-    const rawData = await fetch(url, requestParams);
-    const data = rawData.headers.get('content-type')?.includes('application/json')
-        ? await rawData.json() : rawData;
-    if (rawData.ok) return data;
-    const error = typeof data === 'string' ? data : data.statusText;
-    throw new Error(error);
+    try {
+        const rawData = await fetch(url, requestParams);
+        const data = rawData.headers.get('content-type')?.includes('application/json')
+            ? await rawData.json() : rawData;
+        if (rawData.ok) return data;
+        const error = typeof data === 'string' ? data : data.statusText;
+        throw new Error(error);
+    } catch (error) {
+        if (error instanceof Error) {
+            throw new Error(error.message + ' Please try again later.');
+        }
+    }
+
 };
