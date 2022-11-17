@@ -1,0 +1,86 @@
+@use "./assets/styles/themes";
+
+@mixin centered {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
+}
+
+$correlation: calc(1088 / 725);
+$resp-width: clamp(312px, 90vw, 900px);
+$resp-height: calc($resp-width / $correlation);
+
+.app-wrapper{
+  height: 100vh;
+  width: 100vw;
+  overflow: hidden;
+  @include centered;
+}
+
+.app--light {
+  @include themes.svg-color($is-dark-theme: false);
+}
+
+.app--dark {
+  @include themes.svg-color($is-dark-theme: true);
+}
+
+.App {
+  max-width: 1200px;
+  position: relative;
+  padding: min(15px, 1.25vw);
+  height: 100vh;
+  color: inherit;
+  background-color: inherit;
+  @include centered;
+  font-family: "Virgil", 'Segoe UI Emoji';
+}
+
+.internet-connection{
+  position: absolute;
+  top: 0;
+  width: 100%;
+  text-align: center;
+  z-index: 1;
+  color: #fff;
+  padding: 1px;
+  transition: 1s;
+}
+
+.internet-connection--connected{
+  background-color: lightgreen;
+}
+
+.internet-connection--disconnected{
+  background-color: rgb(224, 77, 77);
+}
+
+.outter-container {
+  position: relative;
+  width: $resp-width;
+  height: $resp-height;
+  padding: min(2.9vw, 29px);
+}
+
+.main-frame {
+  width: $resp-width;
+  height: $resp-height;
+  top: auto;
+  left: auto;
+}
+
+@media (max-width: 599px) {
+  .outter-container {
+    height: calc($resp-height * 2);
+  }
+
+  .inner-container {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .main-frame {
+    transform: scaleY(2);
+  }
+}

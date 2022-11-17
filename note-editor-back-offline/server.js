@@ -19,6 +19,7 @@ app.use('/auth', require('./routes/auth'));
 app.use(verifyJWT);
 
 app.use('/notes', require('./routes/notes'));
+app.use('/auth/refresh', require('./routes/refresh'));
 
 app.listen(3500, () => {
     console.log('server is running!')

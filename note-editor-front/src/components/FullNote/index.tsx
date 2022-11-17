@@ -9,15 +9,16 @@ import { ReactComponent as SaveFrame } from "../../assets/svg/frames/save.svg";
 import { ReactComponent as TrashBin } from "../../assets/svg/icons/trash-bin.svg";
 
 import { NoteType } from '../../interfaces/common';
-import { DispatchContext, StateContext } from '../../context/context';
-
-import './style.scss';
+import { StateContext, DispatchContext } from '../../context/reducerContext';
 import { fullNoteValidSchema } from '../../formik/validationSchema';
 import { deleteNote } from '../../api/notes';
-import { getHandleDispatch, retreieveNotes } from '../../helpers';
+import { deleteNoteSync, receiveNotes, saveNotesAsync, saveNotesSync } from '../../helpers/notes';
+
+import './style.scss';
+
 import { Actions } from '../../useReducer/actions';
-import { deleteNoteSync, saveNotesAsync, saveNotesSync } from '../../helpers/notes';
-const { SET_NOTES, SET_IS_DATA_FETCHING, SET_SELECTED_NOTE } = Actions;
+const { SET_NOTES, SET_IS_DATA_FETCHING, SET_SELECTED_NOTE, 
+    SET_SEARCH_INPUT, SET_GLOBAL_ERROR } = Actions;
 
 interface Props {
     notes: NoteType[];
@@ -28,6 +29,7 @@ interface Props {
     setWasSaved: React.Dispatch<React.SetStateAction<boolean>>;
     setIsSavingFetching: React.Dispatch<React.SetStateAction<boolean>>;
 }
+
 interface ValuesType {
     title: string;
     description: string;
@@ -36,11 +38,8 @@ interface ValuesType {
 const FullNote: React.FC<Props> = ({ notes, selectedNote,
     displayNotes, newNoteElement, setNewNoteElement, setWasSaved, setIsSavingFetching
 }) => {
-
-    const dispatch = useContext(DispatchContext)!;
-    const handleDispatch = getHandleDispatch(dispatch);
-    const { shouldTitleBeAutofocused, isLoggedIn } = useContext(StateContext);
-
+    const handleDispatch = useContext(DispatchContext)!;
+    const { shouldTitleBeAutofocused, isLoggedIn, searchInput } = useContext(StateContext);
     const titleRef = useRef<HTMLInputElement>(null);
     const [wasChanged, updateWasChanged] = useState<boolean>(false);
 
@@ -51,12 +50,18 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
     const updateNotes = async (delay: number, selectedNote: NoteType) => {
         setTimeout(async () => {
             handleDispatch(SET_IS_DATA_FETCHING, true);
-            const notes = await retreieveNotes(isLoggedIn);
-            handleDispatch(SET_NOTES, notes);
-            updateWasChanged(false);
-            newNoteElement && setNewNoteElement(null);
-            handleDispatch(SET_SELECTED_NOTE, selectedNote);
-            handleDispatch(SET_IS_DATA_FETCHING, false);
+            try {
+                const notes = await receiveNotes(isLoggedIn);
+                handleDispatch(SET_NOTES, notes);
+                updateWasChanged(false);
+                newNoteElement && setNewNoteElement(null);
+                handleDispatch(SET_SELECTED_NOTE, selectedNote);
+            } catch (error) {
+                handleDispatch(SET_GLOBAL_ERROR, ((error as Error).message));
+            }
+            finally {
+                handleDispatch(SET_IS_DATA_FETCHING, false);
+            }
         }, delay);
     }
 
@@ -90,6 +95,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
         let index = displayNotes.findIndex(({ id }) => id === note?.id);
         index += index === (displayNotes.length - 1) ? (-1) : 1;
         const indexedNote = displayNotes[index] || null;
+        if(!indexedNote && searchInput) handleDispatch(SET_SEARCH_INPUT, '');
         isLoggedIn ? await deleteNote(note) : deleteNoteSync(note, notes);
         updateNotes(0, indexedNote);
     }
@@ -103,8 +109,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
             initialValues={{ title, description }}
             validationSchema={fullNoteValidSchema}
             onSubmit={save}
-            enableReinitialize={true}
-        >
+            enableReinitialize={true}>
             {({ values: { title, description } }: {
                 values: ValuesType;
             }) =>
@@ -114,8 +119,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                         <button
                             type='button'
                             className="full-note__trash-bin-btn"
-                            onClick={removeNote}
-                        >
+                            onClick={removeNote}>
                             <TrashBin className='full-note__trash-bin-icon' />
                         </button>
                         <div className="full-note__title-caption-wrapper">
@@ -123,8 +127,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                             <ErrorMessage
                                 component="span"
                                 className='full-note__title-error-msg'
-                                name="title"
-                            />
+                                name="title" />
                         </div>
                         <div className="full-note__title-wrapper">
                             <TitleFrame className="full-note__title-frame" />
@@ -136,8 +139,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                                 value={title}
                                 onInput={handleInput}
                                 autoFocus={true}
-                                innerRef={titleRef}
-                            />
+                                innerRef={titleRef} />
                         </div>
                         <div className="full-note__description-caption-wrapper">
                             <label
@@ -148,8 +150,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                             <ErrorMessage
                                 component="span"
                                 className='full-note__description-error-msg'
-                                name="description"
-                            />
+                                name="description" />
                         </div>
                         <div className="full-note__description-wrapper">
                             <DescriptionFrame className="full-note__description-frame" />
@@ -159,8 +160,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                                 placeholder='Type in your note content'
                                 className="full-note__description-textarea"
                                 value={description}
-                                onInput={handleInput}
-                            />
+                                onInput={handleInput} />
                         </div>
                         <button
                             type='submit'

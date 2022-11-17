@@ -3,9 +3,9 @@
     height: $my-height;
     margin-bottom: calc(3700% / 1018);
     display: flex;
+    align-items: center;
     position: relative;
     gap: calc(3600% / 1018);
-    background-color: lightcyan;
 
     @media (max-width: 599px) {
         height: 14.5%;

@@ -1,7 +1,7 @@
 const jwt = require('jsonwebtoken');
 const { users } = require('../config/db');
 
-const requestNotes = (username) => users.find(item => item.username === username).notes;
+const requestNotes = (username) => users.find(item => item.username === username)?.notes;
 const getIndex = (username) => users.findIndex(item => item.username === username);
 
 const getNotes = async (req, res) => {
@@ -43,7 +43,7 @@ const patchNote = async (req, res) => {
     const { username } = req.user;
     const index = getIndex(username);
     const user = users[index];
-    console.log('user', user)
+    console.log('user', user);
     user.notes = user.notes.map(item => {
         return item.id === id ? { ...item, ...newInfo } : item;
     });

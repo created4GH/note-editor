@@ -3,34 +3,32 @@ import React, { ChangeEvent, useContext, useRef } from 'react';
 import { ReactComponent as SearchFrame } from "../../assets/svg/frames/search.svg";
 import { ReactComponent as Loupe } from "../../assets/svg/icons/loupe.svg";
 
-import { DispatchContext } from '../../context/context';
-import { getHandleDispatch } from '../../helpers';
+import { DispatchContext, StateContext } from '../../context/reducerContext';
 import { NoteType } from '../../interfaces/common';
-import { Actions } from '../../useReducer/actions';
-import { DisplayNotesCallback } from '../../useReducer/interfaces';
 
 import './style.scss';
 
-const { SET_DISPLAY_NOTES, SET_DISPLAY_NOTES_CALLBACK, SET_SHOULD_TITLE_BE_AUTOFOCUSED } = Actions;
+import { Actions } from '../../useReducer/actions';
+import { filterNotes } from '../../helpers/notes';
+const { SET_DISPLAY_NOTES, SET_SELECTED_NOTE,
+    SET_SHOULD_TITLE_BE_AUTOFOCUSED, SET_SEARCH_INPUT } = Actions;
 
 interface Props {
     notes: NoteType[]
 }
 
 const Search: React.FC<Props> = ({ notes }) => {
-    const dispatch = useContext(DispatchContext)!;
-    const handleDispatch = getHandleDispatch(dispatch);
+    const { selectedNote, searchInput } = useContext(StateContext);
+    const handleDispatch = useContext(DispatchContext)!;
     const searchRef = useRef<HTMLInputElement>(null);
 
     const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
         const value = event.target?.value.toLocaleLowerCase();
-        const callback: DisplayNotesCallback = (notes) => {
-            return notes.filter(({ title }) => title.toLocaleLowerCase().includes(value));
-        }
-        const newNotes = callback(notes);
-        const displayNotesCallback = value ? callback : null;
+        const newNotes = filterNotes(value, notes);
+        const newSelectedNote = newNotes.length ? newNotes[0] : selectedNote;
         handleDispatch(SET_DISPLAY_NOTES, newNotes);
-        handleDispatch(SET_DISPLAY_NOTES_CALLBACK, displayNotesCallback);
+        handleDispatch(SET_SEARCH_INPUT, value);
+        handleDispatch(SET_SELECTED_NOTE, newSelectedNote);
         handleDispatch(SET_SHOULD_TITLE_BE_AUTOFOCUSED, false);
     }
 
@@ -46,6 +44,7 @@ const Search: React.FC<Props> = ({ notes }) => {
                 placeholder='Search by title'
                 onChange={handleSearch}
                 onBlur={handleBlur}
+                value={searchInput}
             />
             <Loupe className='search__loupe-icon' />
         </div>

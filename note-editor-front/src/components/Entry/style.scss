@@ -1,10 +1,9 @@
-@use '../../assets/styles/_pop-up';
+@use "../../assets/styles/_pop-up";
 
 .entry-btn {
     $this-size: clamp(25px, 3.8vw, 38px);
     width: $this-size;
     height: $this-size;
-    position: absolute;
     right: 0;
     top: 0;
     display: flex;
@@ -13,8 +12,8 @@
 
     .entry-btn__login-icon,
     .entry-btn__logout-icon {
-        width: 90%;
-        height: 90%;
+        width: 85%;
+        height: 85%;
 
         fill: rgb(36, 33, 33);
     }
@@ -36,13 +35,15 @@
     border-radius: 10px;
 }
 
-.entry-message--loading {
+.entry--loading {
+    border: 1px solid black;
     &::after {
         content: "";
         position: absolute;
         animation: loading 1s infinite;
     }
 }
+
 @keyframes loading {
     33% {
         content: ".";
@@ -62,4 +63,10 @@
 .entry-message--success {
     color: rgb(88, 179, 88);
     border: 2px solid rgb(88, 179, 88);
+}
+
+@media (max-width: 599px) {
+    .entry-btn {
+        position: absolute;
+    }
 }

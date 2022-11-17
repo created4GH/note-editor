@@ -10,7 +10,6 @@ interface Props {
 }
 
 const Saving: React.FC<Props> = ({ isSavingFetching }) => {
-
     const element = isSavingFetching ?
         <SavingLoader />
         : <>

@@ -2,7 +2,13 @@
     display: flex;
     flex-direction: column;
     overflow: hidden;
-    background: lightblue;
+
+    .chosen-note {
+        path {
+            stroke-width: 3px;
+            stroke: #0000ff;
+        }
+    }
 }
 
 .notes-list--zero-notes {
@@ -20,16 +26,10 @@
             font-size: 105%;
 
             path {
-                stroke-width: 5px;
+                stroke-width: 3px;
                 stroke: #7171ec;
             }
         }
-    }
-}
-
-.chosen-note {
-    path {
-        stroke: #0000ff;
     }
 }
 
@@ -59,6 +59,10 @@
             background-color: rgba($color: rgb(65, 58, 58), $alpha: 0.2);
         }
     }
+}
+
+.notes-list__list--centered{
+    justify-content: center;
 }
 
 .notes-list__note {

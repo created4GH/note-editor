@@ -1,8 +1,8 @@
 @mixin foreground {
     position: absolute;
-    top: 0;
     width: min(842px, 84.2vw);
     height: calc(min(842px, 84.2vw) / 1.55);
+    top: 0;
     box-sizing: content-box;
     margin: -100vw;
     padding: 100vw;

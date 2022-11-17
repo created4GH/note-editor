@@ -14,3 +14,8 @@ export interface InitialsValuesType {
 
 export type HandleNoteChange = (note: NoteType) => Promise<any>;
 
+export interface Message {
+    msgText: string;
+    msgClassName: string;
+}
+

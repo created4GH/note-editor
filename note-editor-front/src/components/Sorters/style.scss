@@ -8,6 +8,7 @@
 .sorters__sorter-by-title,
 .sorters__sorter-by-date {
     height: 70%;
+    display: flex;
 }
 
 .sorters__sorter-by-title-icon,
@@ -25,5 +26,10 @@
         width: 58.43vw;
         display: flex;
         justify-content: space-evenly;
+    }
+
+    .sorters__sorter-by-title,
+    .sorters__sorter-by-date {
+        height: clamp(18px, 4vw, 22px)
     }
 }

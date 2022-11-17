@@ -1,0 +1,18 @@
+.internet-connection {
+    position: absolute;
+    top: 0;
+    width: 100%;
+    text-align: center;
+    z-index: 1;
+    color: #fff;
+    padding: 1px;
+    transition: 1s;
+}
+
+.internet-connection--connected {
+    background-color: lightgreen;
+}
+
+.internet-connection--disconnected {
+    background-color: rgb(224, 77, 77);
+}

@@ -1,4 +1,4 @@
-@use '../../assets/styles/_pop-up';
+@use '../../../assets/styles/_pop-up';
 
 $default-border: 2px dashed
     rgba(
@@ -7,21 +7,20 @@ $default-border: 2px dashed
     );
 $active-border: 2px solid
     rgba(
-        $color: #4183c0,
-        $alpha: 0.6,
+        $color: #5697d3,
+        $alpha: 1,
     );
 
-.user-form-wrapper {
+.entry-form-wrapper {
     @include pop-up.foreground;
     z-index: 3;
     background-color: rgba($color: #353232, $alpha: 0.5);
 }
 
-.user-form {
+.entry-form {
     position: relative;
     width: clamp(300px, 36vw, 360px);
     border: $default-border;
-    background-color: #fff;
     border-radius: 10px;
     padding: 10px 5px 20px 5px;
 
@@ -33,23 +32,24 @@ $active-border: 2px solid
     }
 }
 
-.user-form__submit-message {
+.entry-form__submit-message {
     position: absolute;
     top: 0;
     left: 50%;
     transform: translate(-50%, -100%);
     background: #fff;
-    padding: 10px;
+    padding: 10px 20px;
+    box-sizing: content-box;
     border-radius: 10px;
     opacity: 0;
     animation: appearance 4s;
 }
 
-.user-form__submit-error {
+.entry-form__submit-error {
     color: red;
     border: 2px dashed red;
 }
-.user-form__submit-success {
+.entry-form__submit-success {
     color: lightgreen;
     border: 2px dashed lightgreen;
 }
@@ -68,14 +68,14 @@ $active-border: 2px solid
     }
 }
 
-.user-form__header {
+.entry-form__header {
     position: relative;
     text-align: initial;
     padding: 5px;
     display: flex;
     justify-content: space-between;
 
-    .user-form__submit-error {
+    .entry-form__submit-error {
         color: red;
         position: absolute;
     }
@@ -94,7 +94,7 @@ $active-border: 2px solid
     }
 }
 
-.user-form__input-wrapper {
+.entry-form__input-wrapper {
     position: relative;
     padding: 5px;
     display: flex;
@@ -102,7 +102,7 @@ $active-border: 2px solid
     align-items: center;
     text-align: left;
 
-    .user-form__error-msg {
+    .entry-form__error-msg {
         position: absolute;
         width: 100%;
         top: 0;
@@ -118,7 +118,7 @@ $active-border: 2px solid
         margin-right: 10px;
     }
 
-    .user-form__input {
+    .entry-form__input {
         width: 75%;
         border: $default-border;
         padding: 5px;
@@ -131,7 +131,7 @@ $active-border: 2px solid
     }
 }
 
-.user-form__entry-btn {
+.entry-form__entry-btn {
     width: min(200px, 30%);
     padding: 5px;
     margin: auto;

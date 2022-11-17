@@ -1,16 +1,16 @@
 import React from 'react';
 import ReactDOM from 'react-dom/client';
-import ReducerProvider from './context/ReducerProvider';
 
 import App from './App';
+import Providers from './context/Providers';
 
 const root = ReactDOM.createRoot(
   document.getElementById('root') as HTMLElement
 );
 root.render(
   <React.StrictMode>
-    <ReducerProvider>
+    <Providers>
       <App />
-    </ReducerProvider>
+    </Providers>
   </React.StrictMode>
 );

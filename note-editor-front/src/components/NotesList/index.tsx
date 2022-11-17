@@ -1,14 +1,15 @@
-import React, { useMemo, useContext, useEffect } from 'react';
+import React, { useMemo, useContext } from 'react';
 import { v4 as uuid } from 'uuid';
 
 import { ReactComponent as AddNewFrame } from "../../assets/svg/frames/new.svg";
 import Note from './Note';
 
-import { DispatchContext } from '../../context/context';
+import { DispatchContext } from '../../context/reducerContext';
 import { NoteType } from '../../interfaces/common';
-import { Actions } from '../../useReducer/actions';
+
 import './style.scss';
-import { getHandleDispatch } from '../../helpers';
+
+import { Actions } from '../../useReducer/actions';
 const { SET_SELECTED_NOTE } = Actions;
 
 
@@ -20,13 +21,14 @@ interface Props {
     setNewNoteElement: (value: React.SetStateAction<JSX.Element | null>) => void;
 }
 
-const NotesList: React.FC<Props> = ({ notes, displayNotes, selectedNote,
-    newNoteElement, setNewNoteElement }) => {
-    const dispatch = useContext(DispatchContext)!;
-    const handleDispatch = getHandleDispatch(dispatch);
+const NotesList: React.FC<Props> = ({ notes, displayNotes, selectedNote, newNoteElement,
+    setNewNoteElement }) => {
+    const handleDispatch = useContext(DispatchContext)!;
 
     const notesListClassName = "notes-list" +
-        ((notes.length || newNoteElement) ? "" : " notes-list--zero-notes");
+        ((notes.length || newNoteElement) ? '' : " notes-list--zero-notes");
+    const listClassName = 'notes-list__list' +
+        ((notes.length && notes.length < 3) ? ' notes-list__list--centered' : '');
 
     const addNewNote = () => {
         const newNote: NoteType = {
@@ -64,7 +66,7 @@ const NotesList: React.FC<Props> = ({ notes, displayNotes, selectedNote,
                 <AddNewFrame className='notes-list__add-new-btn-frame' />
                 <span>+ New</span>
             </button>
-            <div className="notes-list__list">
+            <div className={listClassName}>
                 {newNoteElement}
                 {mappedTitles}
             </div>

@@ -1,31 +1,26 @@
+@use '../../assets//styles/pop-up';
+
 .saving-wrapper{
-    position: absolute;
-    height: 100vh;
-    width: 100vw;
-    top: 0;
-    left: 0;
+    @include pop-up.foreground;
     z-index: 10;
 }
 
 .saving {
-    $this-size: min(150px, 15vw);
+    $this-size: clamp(100px, 15vw, 150px);
     position: absolute;
-    top: 50%;
-    left: 50%;
     width: $this-size;
     height: $this-size;
-    transform: translate(-50%, -50%);
     padding: 5px;
-    box-sizing: content-box;
     display: flex;
     flex-direction: column;
     justify-content: space-evenly;
     align-items: center;
-    background-color: rgba($color: black, $alpha: 0.7);
+    background-color: rgba($color: black, $alpha: 0.8);
     border-radius: 10px;
+    border: 2px solid white;
     z-index: 4;
     color: white;
-    opacity: 0;
+    opacity: 1;
     animation: custom-appearance 2s;
 }
 
@@ -53,11 +48,5 @@
     .saving__checkmark-icon {
         height: 60%;
         width: 60%;
-    }
-}
-
-@media (max-width: 599px) {
-    .saving {
-        top: 60%;
     }
 }

@@ -3,7 +3,6 @@
     flex-grow: 1;
     display: flex;
     gap: calc((36 - 20 * (1088 / 900)) * 100% / 1018);
-    background-color: lightpink;
 
     @media (max-width: 599px) {
         height: 84%;

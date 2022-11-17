@@ -1,6 +1,7 @@
 export const Keys = {
     IS_LOGGED_IN: 'isLoggedIn',
-    NOTES: 'notes'
+    NOTES: 'notes',
+    THEME: 'theme'
 };
 
 export const TTL = {

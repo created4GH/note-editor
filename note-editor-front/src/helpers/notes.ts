@@ -1,6 +1,17 @@
-import { setStorageNotes } from ".";
+import { setStorageNotes } from "./localStorage";
 import { NoteType } from "../interfaces/common";
-import { addNote, patchNote } from "../api/notes";
+import { addNote, getNotes, patchNote } from "../api/notes";
+import { SortDisplayNotes } from "../useReducer/interfaces";
+
+export const receiveNotes = async (isLoggedIn: boolean) => {
+    let notes: NoteType[] = [];
+    if (isLoggedIn) notes = await getNotes();
+    else {
+        const jsonNotes = localStorage.getItem("notes");
+        notes = jsonNotes ? JSON.parse(jsonNotes) : [];
+    }
+    return notes;
+}
 
 export const saveNotesAsync = async (note: NoteType, isNewNote: boolean) => {
     const apiCall = isNewNote ? addNote : patchNote;
@@ -23,4 +34,6 @@ export const deleteNoteSync = (note : NoteType, notes : NoteType[]) => {
     setStorageNotes(updatedNotes);
 }
 
-
+export const filterNotes = (value: string, notes: NoteType[]) => {
+        return notes.filter(({ title }) => title.toLocaleLowerCase().includes(value));
+}

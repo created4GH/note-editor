@@ -19,10 +19,6 @@ $this-width: min(35.978vw, 359.78px);
 .search__loupe-icon {
     height: 100%;
     width: 10%;
-
-    .inside-loupe {
-        fill: lightcyan;
-    }
 }
 
 @media (max-width: 599px) {

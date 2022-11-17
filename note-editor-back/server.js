@@ -4,10 +4,9 @@ const cors = require('cors');
 const corsOptions = require('./config/corsOptions');
 const cookieParser = require('cookie-parser');
 const mongoose = require('mongoose');
+require('dotenv').config();
 const connectDB = require('./config/connectDb');
 const verifyJWT = require('./middleware/verifyJWT');
-require('dotenv').config();
-// const refresh
 
 connectDB();
 
