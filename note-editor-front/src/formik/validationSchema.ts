@@ -32,13 +32,15 @@ export const SignUpFormValidSchema = createSchema({
 
 export const fullNoteValidSchema = createSchema({
     title: Yup.string()
-        .min(3, setLength("3-5"))
-        .max(50, setLength("3-5"))
+        .min(3, setLength("3-50"))
+        .max(50, setLength("3-50"))
+        .matches(/(\S){3,50}/, 'Spaces are not chars')
         .required("Required!"),
     description: Yup.string()
-        .required("Required!")
         .min(5, setLength("5-300"))
         .max(300, setLength("5-300"))
+        .matches(/(\S){5,300}/, 'Spaces are not chars')
+        .required("Required!")
 })
 
 export type EntryFormValidSchemaType = typeof SignUpFormValidSchema;

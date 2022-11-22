@@ -61,6 +61,7 @@ $resp-height: calc($resp-width / $correlation);
   width: $resp-width;
   height: $resp-height;
   padding: min(2.9vw, 29px);
+  z-index: 1;
 }
 
 .main-frame {

@@ -21,8 +21,6 @@
 
 .entry-message-wrapper {
     @include pop-up.foreground;
-    width: min(842px, 84.2vw);
-    height: calc(min(842px, 84.2vw) / 1.55);
     background-color: rgba($color: #353232, $alpha: 0.5);
     z-index: 3;
 }

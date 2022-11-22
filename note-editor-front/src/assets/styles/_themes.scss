@@ -21,7 +21,7 @@ $active-border: #5697d3;
 
     background-color: $bg-color;
     color: $color;
-
+    /*====================================================*/
     svg {
         path,
         polyline,
@@ -32,19 +32,19 @@ $active-border: #5697d3;
             fill: $color;
         }
     }
-
+    /*====================================================*/
     .search__loupe-icon {
         .inside-loupe {
             fill: $bg-color;
         }
     }
-
+    /*====================================================*/
     .entry-form {
         background-color: $bg-color;
         color: $color;
         border-color: $color;
     }
-
+    /*------------------------------------------*/
     .entry-form__input-wrapper {
         .entry-form__input {
             border-color: $color;
@@ -54,7 +54,7 @@ $active-border: #5697d3;
             }
         }
     }
-
+    /*------------------------------------------*/
     .entry-form__entry-btn {
         border-color: $color;
         &:hover,
@@ -62,18 +62,25 @@ $active-border: #5697d3;
             border-color: $active-border;
         }
     }
-
+    /*------------------------------------------*/
     .entry-message-wrapper {
         background-color: $wrapper-bg-color;
     }
-
+    /*------------------------------------------*/
     .entry-message,
     .entry-form__submit-message {
         background-color: $bg-color;
     }
-
+    /*------------------------------------------*/
     .entry--loading,
     .saving {
         border-color: $color;
     }
+    /*====================================================*/
+    .main-loader-wrapper {
+        .lds-roller div:after {
+            background-color: $color;
+        }
+    }
+    /*====================================================*/
 }

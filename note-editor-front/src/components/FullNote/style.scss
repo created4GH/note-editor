@@ -17,12 +17,6 @@
     position: relative;
   }
 
-  & > label {
-    display: block;
-    margin-bottom: min(5px, 0.5vw);
-    text-align: left;
-  }
-
   input,
   textarea {
     width: 100%;
@@ -59,19 +53,18 @@
 .full-note__title-caption-wrapper,
 .full-note__description-caption-wrapper {
   text-align: left;
+  margin-bottom: min(5px, 0.5vw);
 
-  label {
-    display: inline-block;
+  label{
     margin-right: 2vw;
   }
 }
 
 .full-note__description-error-msg,
 .full-note__title-error-msg {
-  position: absolute;
   display: inline-block;
   color: red;
-  font-size: 0.9rem;
+  font-size: .9rem;
 }
 
 .full-note__title-wrapper {
@@ -128,7 +121,24 @@
     flex-grow: 0;
   }
 
+  .full-note__title-caption-wrapper,
+  .full-note__description-caption-wrapper {
+    font-size: 0.9rem;
+  }
+
+  .full-note__description-error-msg,
+  .full-note__title-error-msg {
+    font-size: 0.7rem;
+  }
+  
   .full-note__description-wrapper {
     margin-bottom: 3.56vw;
+  }
+}
+
+@media (max-width: 450px) {
+  .full-note__title-caption-wrapper,
+  .full-note__description-caption-wrapper {
+    font-size: 0.8rem;
   }
 }

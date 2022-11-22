@@ -1,8 +1,8 @@
-// @font-face {
-//     font-family: "Virgil";
-//     font-display: swap;
-//     src: url("https://excalidraw.com/Virgil.woff2");
-// }
+@font-face {
+    font-family: "Virgil";
+    font-display: swap;
+    src: url("https://excalidraw.com/Virgil.woff2");
+}
 
 [class$="frame"] {
     position: absolute;
@@ -25,6 +25,7 @@ input,
 textarea {
     &::placeholder {
         color: inherit;
+        opacity: .7;
     }
 }
 
@@ -36,5 +37,16 @@ textarea {
 
     input {
         font-size: 0.8rem;
+    }
+}
+
+@media (max-width: 450px) {
+    textarea,
+    button {
+        font-size: 0.8rem;
+    }
+
+    input {
+        font-size: 0.7rem;
     }
 }

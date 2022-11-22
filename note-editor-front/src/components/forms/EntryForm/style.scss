@@ -1,6 +1,6 @@
 @use '../../../assets/styles/_pop-up';
 
-$default-border: 2px dashed
+$default-border: 2px solid
     rgba(
         $color: #2b2828,
         $alpha: 0.6,
@@ -47,11 +47,11 @@ $active-border: 2px solid
 
 .entry-form__submit-error {
     color: red;
-    border: 2px dashed red;
+    border: 2px solid red;
 }
 .entry-form__submit-success {
     color: lightgreen;
-    border: 2px dashed lightgreen;
+    border: 2px solid lightgreen;
 }
 
 @keyframes appearance {

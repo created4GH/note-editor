@@ -39,7 +39,6 @@ interface Props {
 
 const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInfo, inputsInfo,
     submitBtnText, apiRequest, setIsLoginForm, setShouldDisplayEntryForm }) => {
-        
     const handleDispatch = useContext(DispatchContext)!;
     const [isLoading, setIsLoading] = useState<boolean>(false);
     const [{ msgText, msgClassName }, updateMessage] = useState<Message>({

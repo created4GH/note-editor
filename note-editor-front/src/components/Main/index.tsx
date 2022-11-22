@@ -77,7 +77,6 @@ const Main = () => {
                         : null}
                 </>
             }
-            {/* {true && <Saving isSavingFetching={isSavingFetching} />} */}
             {(isSavingFetching || wasSaved) && <Saving isSavingFetching={isSavingFetching} />}
         </div>
     );

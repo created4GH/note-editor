@@ -67,6 +67,8 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
     }
 
     const save = async ({ title, description }: ValuesType) => {
+        title = title.trim();
+        description = description.trim();
         const isNewNote = selectedNote?.id === "dummy";
         if (!wasChanged && !isNewNote) return;
         let note: NoteType;
