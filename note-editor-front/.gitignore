@@ -2,6 +2,7 @@
 
 # dependencies
 /node_modules
+/note-editor-back-offline
 /.pnp
 .pnp.js
 

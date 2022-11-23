@@ -1,7 +1,7 @@
 {
   "name": "node-editor",
   "version": "0.1.0",
-  "homepage": "https://created4github.github.io/note-editor/",
+  "homepage": "https://created4github.github.io/note-editor-frontend/",
   "private": true,
   "dependencies": {
     "@fortawesome/fontawesome-svg-core": "^6.2.0",

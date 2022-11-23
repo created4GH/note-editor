@@ -9,6 +9,6 @@ interface RequestOptions {
 export const REQUEST_OPTIONS : RequestOptions = {
     credentials: 'include',
     headers: {
-        'Access-Control-Allow-Origin': 'http://localhost:3000/'
+        'Access-Control-Allow-Origin': 'https://created4github.github.io/note-editor/'
     }
 };
