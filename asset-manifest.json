@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/note-editor-frontend/static/css/main.bdfaefae.css",
-    "main.js": "/note-editor-frontend/static/js/main.3e0d6089.js",
-    "static/media/trash-bin.svg": "/note-editor-frontend/static/media/trash-bin.1cd0059592a9f7b5cd4d685d5bbdb3d4.svg",
-    "static/media/loupe.svg": "/note-editor-frontend/static/media/loupe.82be2444b3f5e46e40c08f2950ae8069.svg",
-    "static/media/login.svg": "/note-editor-frontend/static/media/login.e390056860cf5749e5ae8b38bf60b82a.svg",
-    "static/media/logout.svg": "/note-editor-frontend/static/media/logout.9f46bf736cd37d6a2e4b5fff15b40712.svg",
-    "static/media/note.svg": "/note-editor-frontend/static/media/note.075d8c0eb8fd5c4fc255cad3778bc8fb.svg",
-    "static/media/description.svg": "/note-editor-frontend/static/media/description.91378ec70406bb6b0a175680672206d6.svg",
-    "index.html": "/note-editor-frontend/index.html",
-    "static/media/title.svg": "/note-editor-frontend/static/media/title.cda56693316f6b245b687446799efb28.svg",
-    "static/media/new.svg": "/note-editor-frontend/static/media/new.a4a34d20098705b4c112e7da1c534822.svg",
-    "static/media/note-of-list.svg": "/note-editor-frontend/static/media/note-of-list.07128a473271725bd311dab96dda55e6.svg",
-    "static/media/save.svg": "/note-editor-frontend/static/media/save.66783f9c5f070c48aae6659f7e31a00f.svg",
-    "static/media/search.svg": "/note-editor-frontend/static/media/search.e28f026c8900d46d369bd1d0c52d3080.svg",
-    "static/media/main.svg": "/note-editor-frontend/static/media/main.a64004631c5042fd41d0376721f7c6b9.svg",
-    "static/media/checkmark.svg": "/note-editor-frontend/static/media/checkmark.eb8063511cd43acb7e83fe650a0bc4b1.svg",
-    "static/media/sort-by-date.svg": "/note-editor-frontend/static/media/sort-by-date.f8eacbdeb381166b03e87f47db19266e.svg",
-    "static/media/sort-by-title.svg": "/note-editor-frontend/static/media/sort-by-title.377b8b7bd3af07a1763df5ffed867376.svg",
-    "main.bdfaefae.css.map": "/note-editor-frontend/static/css/main.bdfaefae.css.map",
-    "main.3e0d6089.js.map": "/note-editor-frontend/static/js/main.3e0d6089.js.map"
+    "main.css": "/note-editor/static/css/main.bdfaefae.css",
+    "main.js": "/note-editor/static/js/main.725575a9.js",
+    "static/media/trash-bin.svg": "/note-editor/static/media/trash-bin.1cd0059592a9f7b5cd4d685d5bbdb3d4.svg",
+    "static/media/loupe.svg": "/note-editor/static/media/loupe.82be2444b3f5e46e40c08f2950ae8069.svg",
+    "static/media/login.svg": "/note-editor/static/media/login.e390056860cf5749e5ae8b38bf60b82a.svg",
+    "static/media/logout.svg": "/note-editor/static/media/logout.9f46bf736cd37d6a2e4b5fff15b40712.svg",
+    "static/media/note.svg": "/note-editor/static/media/note.075d8c0eb8fd5c4fc255cad3778bc8fb.svg",
+    "static/media/description.svg": "/note-editor/static/media/description.91378ec70406bb6b0a175680672206d6.svg",
+    "static/media/title.svg": "/note-editor/static/media/title.cda56693316f6b245b687446799efb28.svg",
+    "static/media/new.svg": "/note-editor/static/media/new.a4a34d20098705b4c112e7da1c534822.svg",
+    "static/media/note-of-list.svg": "/note-editor/static/media/note-of-list.07128a473271725bd311dab96dda55e6.svg",
+    "static/media/save.svg": "/note-editor/static/media/save.66783f9c5f070c48aae6659f7e31a00f.svg",
+    "index.html": "/note-editor/index.html",
+    "static/media/search.svg": "/note-editor/static/media/search.e28f026c8900d46d369bd1d0c52d3080.svg",
+    "static/media/main.svg": "/note-editor/static/media/main.a64004631c5042fd41d0376721f7c6b9.svg",
+    "static/media/checkmark.svg": "/note-editor/static/media/checkmark.eb8063511cd43acb7e83fe650a0bc4b1.svg",
+    "static/media/sort-by-date.svg": "/note-editor/static/media/sort-by-date.f8eacbdeb381166b03e87f47db19266e.svg",
+    "static/media/sort-by-title.svg": "/note-editor/static/media/sort-by-title.377b8b7bd3af07a1763df5ffed867376.svg",
+    "main.bdfaefae.css.map": "/note-editor/static/css/main.bdfaefae.css.map",
+    "main.725575a9.js.map": "/note-editor/static/js/main.725575a9.js.map"
   },
   "entrypoints": [
     "static/css/main.bdfaefae.css",
-    "static/js/main.3e0d6089.js"
+    "static/js/main.725575a9.js"
   ]
 }
