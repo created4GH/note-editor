@@ -42,11 +42,9 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
     const { shouldTitleBeAutofocused, isLoggedIn, searchInput } = useContext(StateContext);
     const titleRef = useRef<HTMLInputElement>(null);
     const [wasChanged, updateWasChanged] = useState<boolean>(false);
-
     const { title, description } = selectedNote!;
 
     const handleInput = () => updateWasChanged(true);
-
     const updateNotes = async (selectedNote: NoteType) => {
             handleDispatch(SET_IS_DATA_FETCHING, true);
             try {
@@ -65,8 +63,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
                 }, 200);
             }
     }
-
-    const save = async ({ title, description }: ValuesType) => {
+    const saveNote = async ({ title, description }: ValuesType) => {
         title = title.trim();
         description = description.trim();
         const isNewNote = selectedNote?.id === "dummy";
@@ -88,7 +85,6 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
             updateNotes(note);
         }, 1000);
     }
-
     const removeNote = async () => {
         const note = selectedNote!;
         if (note?.id === "dummy") {
@@ -113,7 +109,7 @@ const FullNote: React.FC<Props> = ({ notes, selectedNote,
         <Formik
             initialValues={{ title, description }}
             validationSchema={fullNoteValidSchema}
-            onSubmit={save}
+            onSubmit={saveNote}
             enableReinitialize={true}>
             {({ values: { title, description } }: {
                 values: ValuesType;

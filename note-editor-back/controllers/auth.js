@@ -26,6 +26,8 @@ const logout = async (req, res) => {
     res.clearCookie('jwt', token,
         {
             httpOnly: true,
+            sameSite: 'None',
+            secure: true,
             expires: new Date(Date.now() + 30 * 60 * 1000)
         });
     return res.sendStatus(204);

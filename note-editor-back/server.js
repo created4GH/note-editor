@@ -34,5 +34,6 @@ app.use('/auth/refresh', require('./routes/refresh'));
 app.use(errorHandler);
 
 mongoose.connection.once('open', async () => {
+    console.log('connected to db')
     app.listen(PORT, () => console.log('server is running!'));
 });

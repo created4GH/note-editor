@@ -18,7 +18,6 @@ const { SET_NOTES, SET_IS_DATA_FETCHING,
 const Main = () => {
     const { notes, displayNotes, isDataFetching, isLoggedIn, selectedNote } = useContext(StateContext);
     const handleDispatch = useContext(DispatchContext)!;
-
     const [newNoteElement, setNewNoteElement] = useState<JSX.Element | null>(null);
     const [wasSaved, setWasSaved] = useState<boolean>(false);
     const [isSavingFetching, setIsSavingFetching] = useState<boolean>(false);

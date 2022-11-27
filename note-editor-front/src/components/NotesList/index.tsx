@@ -24,7 +24,6 @@ interface Props {
 const NotesList: React.FC<Props> = ({ notes, displayNotes, selectedNote, newNoteElement,
     setNewNoteElement }) => {
     const handleDispatch = useContext(DispatchContext)!;
-
     const notesListClassName = "notes-list" +
         ((notes.length || newNoteElement) ? '' : " notes-list--zero-notes");
     const listClassName = 'notes-list__list' +
@@ -39,7 +38,6 @@ const NotesList: React.FC<Props> = ({ notes, displayNotes, selectedNote, newNote
         setNewNoteElement(<Note note={newNote} className={"notes-list__note chosen-note"} />);
         handleDispatch(SET_SELECTED_NOTE, newNote);
     };
-
     const selectNote = (note: NoteType) => {
         if (selectedNote?.id === "dummy") {
             const isLeaving = window.confirm("The new note won't be save. Are you sure to leave?");

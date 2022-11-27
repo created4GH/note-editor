@@ -1,4 +1,4 @@
-import { REQUEST_OPTIONS } from "../constants/api";
+import { REQUEST_OPTIONS } from "../constants/requests";
 
 interface RequestParams {
     headers: { [key: string]: string },

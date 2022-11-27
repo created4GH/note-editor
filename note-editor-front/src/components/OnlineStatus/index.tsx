@@ -34,7 +34,6 @@ const OnlineStatus = () => {
         onlineStatusMessage: 'No Internet Connection',
         onlineStatusClassName: 'internet-connection--disconnected'
     });
-
     const handleReconnection = () => handleOnlineStatus({
         onlineStatusMessage: 'You are back online',
         onlineStatusClassName: 'internet-connection--connected'

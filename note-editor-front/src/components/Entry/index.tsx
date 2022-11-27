@@ -13,7 +13,7 @@ import { DispatchContext } from '../../context/reducerContext';
 import './style.scss';
 
 import { Actions } from '../../useReducer/actions';
-const { SET_IS_LOGGED_IN } = Actions;
+const { SET_IS_LOGGED_IN, SET_SELECTED_NOTE } = Actions;
 
 interface Props {
     isLoggedIn: boolean;
@@ -25,30 +25,30 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
         msgText: '',
         msgClassName: ''
     });
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isFetching, setIsFetching] = useState<boolean>(false);
     const [isLoginForm, setIsLoginForm] = useState<boolean>(true);
     const [ShouldDisplayEntryForm, setShouldDisplayEntryForm] = useState<boolean>(false);
-
     const btnTitle = isLoggedIn ? 'Logout' : 'Login';
+
     const handleClick = () => isLoggedIn ? handleLogout() : handleLogin();
     const handleLogin = async () => setShouldDisplayEntryForm(true);
-
     const handleLogout = async () => {
-        setIsLoading(true);
+        setIsFetching(true);
         updateMessage({
             msgText: 'Logging out',
             msgClassName: 'entry-message--loading entry--loading'
         });
         try {
             await logout();
+            updateMessage({
+                msgText: "You've been logged out!",
+                msgClassName: 'entry-message--success'
+            });
             setTimeout(() => {
-                updateMessage({
-                    msgText: "You've been logged out!",
-                    msgClassName: 'entry-message--success'
-                });
                 handleDispatch(SET_IS_LOGGED_IN, false);
+                handleDispatch(SET_SELECTED_NOTE, null);
                 localStorage.removeItem(Keys.IS_LOGGED_IN);
-            }, 1000);
+            }, 500);
         } catch (error) {
             updateMessage({
                 msgText: (error as Error).message,
@@ -57,14 +57,13 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
         }
         finally {
             setTimeout(() => {
-                setIsLoading(false);
-            }, 1700);
+                setIsFetching(false);
+            }, 1000);
         }
     };
 
     const icon = isLoggedIn ? <LogoutIcon className='entry-btn__logout-icon' />
         : <LoginIcon className='entry-btn__login-icon' />;
-
     const entryMsg = <div className="entry-message-wrapper">
         <div className={'entry-message ' + msgClassName}>{msgText}</div>
     </div>
@@ -74,7 +73,7 @@ const Entry: React.FC<Props> = ({ isLoggedIn }) => {
             <button className='entry-btn' onClick={handleClick} title={btnTitle}>
                 {icon}
             </button>
-            {isLoading && entryMsg}
+            {isFetching && entryMsg}
             {ShouldDisplayEntryForm && (isLoginForm ?
                 <LoginForm
                     setIsLoginForm={setIsLoginForm}

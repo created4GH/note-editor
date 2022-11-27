@@ -40,7 +40,7 @@ interface Props {
 const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInfo, inputsInfo,
     submitBtnText, apiRequest, setIsLoginForm, setShouldDisplayEntryForm }) => {
     const handleDispatch = useContext(DispatchContext)!;
-    const [isLoading, setIsLoading] = useState<boolean>(false);
+    const [isFetching, setIsFetching] = useState<boolean>(false);
     const [{ msgText, msgClassName }, updateMessage] = useState<Message>({
         msgText: '',
         msgClassName: ''
@@ -48,33 +48,30 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
 
     const closeForm = (event: MouseEvent<HTMLDivElement>) => {
         const className = (event.target as HTMLDivElement).className;
-        if(className === 'entry-form-wrapper'){
+        if (className === 'entry-form-wrapper') {
             setShouldDisplayEntryForm(false);
             setIsLoginForm(true);
         }
     }
-
     const onSubmit = async ({ username, password }: InitialsValuesType) => {
-        setIsLoading(true);
+        setIsFetching(true);
         updateMessage({
             msgText: 'Loading',
             msgClassName: 'entry-message--loading entry--loading'
         });
         try {
             await apiRequest(username, password);
-            setTimeout(() => {
-                updateMessage({
-                    msgText: 'Success!',
-                    msgClassName: 'entry-form__submit-success'
-                })
-            }, 1000);
+            updateMessage({
+                msgText: 'Success!',
+                msgClassName: 'entry-form__submit-success'
+            })
             setTimeout(() => {
                 setShouldDisplayEntryForm(false);
                 handleDispatch(SET_SELECTED_NOTE, null);
                 handleDispatch(SET_IS_LOGGED_IN, true);
                 setStorageIsLoggedIn();
                 setIsLoginForm(true);
-            }, 1700);
+            }, 500);
         } catch (error) {
             updateMessage({
                 msgText: (error as Error).message,
@@ -83,13 +80,13 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
         }
         finally {
             setTimeout(() => {
-                setIsLoading(false);
-            }, 1700);
+                setIsFetching(false);
+            }, 1500);
         }
     };
-
     const changeForm = () => setIsLoginForm(prevState => !prevState);
 
+    const entryMsg = <div className={'entry-form__submit-message ' + msgClassName}>{msgText}</div>;
     const mappedInputs = useMemo(() => {
         return inputsInfo.map(({ title, name, type, placeholder }) => {
             return <div key={uuid()} className="entry-form__input-wrapper">
@@ -109,8 +106,6 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
         })
     }, [inputsInfo]);
 
-    const entryMsg = <div className={'entry-form__submit-message ' + msgClassName}>{msgText}</div>;
-
     return (
         <Formik
             initialValues={initialValues}
@@ -119,7 +114,7 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
         >
             <div className="entry-form-wrapper" onClick={closeForm}>
                 <Form className='entry-form'>
-                    {isLoading && entryMsg}
+                    {isFetching && entryMsg}
                     <div className="entry-form__header">
                         <span>{headerInfo.title}</span>
                         <button type='button' onClick={changeForm}>

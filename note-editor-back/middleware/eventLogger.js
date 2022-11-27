@@ -21,7 +21,6 @@ const logEvent = async (message, logName) => {
 };
 
 const logger = (req, res, next) => {
-    console.log('here')
     logEvent(`${req.method}\t${req.headers.origin}\t${req.url}`, 'reqLog.txt');
     next();
 }

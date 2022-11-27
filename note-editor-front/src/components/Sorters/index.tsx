@@ -38,7 +38,6 @@ const Sorters: React.FC<Props> = ({ notes }) => {
         handleDispatch(SET_SORT_DISPLAY_NOTES, sortDisplayNotes);
         sortStateCallback(isDescOrder ? "asc" : "desc");
     }
-
     const sortByDate = () => sortBy("createdDate", dateSortOrder, updateDateSortOrder);
     const sortByTitle = () => sortBy("title", titleSortOrder, updateTitleSortOrder);
 

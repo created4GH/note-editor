@@ -5,11 +5,11 @@ import { ReactComponent as Loupe } from "../../assets/svg/icons/loupe.svg";
 
 import { DispatchContext, StateContext } from '../../context/reducerContext';
 import { NoteType } from '../../interfaces/common';
+import { filterNotes } from '../../helpers/notes';
 
 import './style.scss';
 
 import { Actions } from '../../useReducer/actions';
-import { filterNotes } from '../../helpers/notes';
 const { SET_DISPLAY_NOTES, SET_SELECTED_NOTE,
     SET_SHOULD_TITLE_BE_AUTOFOCUSED, SET_SEARCH_INPUT } = Actions;
 
@@ -31,7 +31,6 @@ const Search: React.FC<Props> = ({ notes }) => {
         handleDispatch(SET_SELECTED_NOTE, newSelectedNote);
         handleDispatch(SET_SHOULD_TITLE_BE_AUTOFOCUSED, false);
     }
-
     const handleBlur = () => handleDispatch(SET_SHOULD_TITLE_BE_AUTOFOCUSED, true);;
 
     return (
