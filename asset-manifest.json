@@ -1,7 +1,7 @@
 {
   "files": {
     "main.css": "/note-editor/static/css/main.bdfaefae.css",
-    "main.js": "/note-editor/static/js/main.ace07672.js",
+    "main.js": "/note-editor/static/js/main.195548e1.js",
     "static/media/trash-bin.svg": "/note-editor/static/media/trash-bin.1cd0059592a9f7b5cd4d685d5bbdb3d4.svg",
     "static/media/loupe.svg": "/note-editor/static/media/loupe.82be2444b3f5e46e40c08f2950ae8069.svg",
     "static/media/login.svg": "/note-editor/static/media/login.e390056860cf5749e5ae8b38bf60b82a.svg",
@@ -19,10 +19,10 @@
     "static/media/sort-by-date.svg": "/note-editor/static/media/sort-by-date.f8eacbdeb381166b03e87f47db19266e.svg",
     "static/media/sort-by-title.svg": "/note-editor/static/media/sort-by-title.377b8b7bd3af07a1763df5ffed867376.svg",
     "main.bdfaefae.css.map": "/note-editor/static/css/main.bdfaefae.css.map",
-    "main.ace07672.js.map": "/note-editor/static/js/main.ace07672.js.map"
+    "main.195548e1.js.map": "/note-editor/static/js/main.195548e1.js.map"
   },
   "entrypoints": [
     "static/css/main.bdfaefae.css",
-    "static/js/main.ace07672.js"
+    "static/js/main.195548e1.js"
   ]
 }
