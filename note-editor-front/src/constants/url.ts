@@ -1,4 +1,4 @@
-export const BASE_URL = 'https://dark-teal-seahorse-toga.cyclic.app/';
+export const BASE_URL = 'https://faithful-handbag-toad.cyclic.app/';
 export const REGISTER_USER_URL = BASE_URL + 'register/';
 export const AUTH_URL = BASE_URL + 'auth/';
 export const LOGOUT_URL = AUTH_URL + 'logout/';

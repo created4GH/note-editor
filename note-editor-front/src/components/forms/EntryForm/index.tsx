@@ -81,7 +81,7 @@ const EntryForm: React.FC<Props> = ({ initialValues, validationSchema, headerInf
         finally {
             setTimeout(() => {
                 setIsFetching(false);
-            }, 1500);
+            }, 1000);
         }
     };
     const changeForm = () => setIsLoginForm(prevState => !prevState);

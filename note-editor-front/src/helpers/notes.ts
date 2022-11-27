@@ -7,8 +7,8 @@ export const receiveNotes = async (isLoggedIn: boolean) => {
         let notes: NoteType[] = [];
         if (isLoggedIn) notes = await getNotes();
         else {
-            const jsonNotes = localStorage.getItem("notes");
-            notes = jsonNotes ? JSON.parse(jsonNotes) : [];
+                const jsonNotes = localStorage.getItem("notes");
+                notes = jsonNotes ? JSON.parse(jsonNotes) : [];
         }
         return notes;
     } catch (error) {
